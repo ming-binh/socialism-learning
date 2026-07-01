@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npx vite build --config vite.github.config.ts --base=/",
+  "outputDirectory": "dist-static",
+  "framework": null,
+  "rewrites": [
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}
