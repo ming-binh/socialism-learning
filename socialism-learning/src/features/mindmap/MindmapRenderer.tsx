@@ -3,7 +3,6 @@ import {
   ZoomIn,
   ZoomOut,
   RotateCcw,
-  Download,
   Search,
   Copy,
   Check,
@@ -518,69 +517,6 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
     return false;
   };
 
-  // Export SVG as PNG
-  const exportAsPNG = () => {
-    const svg = svgRef.current;
-    if (!svg) return;
-
-    const clonedSvg = svg.cloneNode(true) as SVGSVGElement;
-
-    // Reset transform on cloned svg group
-    const innerGroup = clonedSvg.querySelector("#zoom-group");
-    if (innerGroup) {
-      innerGroup.removeAttribute("style");
-      innerGroup.setAttribute("transform", "translate(0, 0) scale(1)");
-    }
-
-    clonedSvg.setAttribute("width", String(svgW));
-    clonedSvg.setAttribute("height", String(svgH));
-
-    const svgString = new XMLSerializer().serializeToString(clonedSvg);
-
-    const isDarkMode = document.documentElement.classList.contains("dark");
-    const bgColor = isDarkMode ? "#161312" : "#FAF8F5";
-    const fgColor = isDarkMode ? "#EAE5E3" : "#2E2422";
-    const cardColor = isDarkMode ? "#201B1A" : "#FFFFFF";
-    const primaryColor =
-      colorTheme === "marxist" ? (isDarkMode ? "#c04e3e" : "#743027") : themeConfig.primary;
-
-    let resolvedSvgString = svgString
-      .replace(/var\(--color-background\)/g, bgColor)
-      .replace(/var\(--color-foreground\)/g, fgColor)
-      .replace(/var\(--color-card\)/g, cardColor)
-      .replace(/var\(--color-primary\)/g, primaryColor)
-      .replace(
-        /var\(--color-border\)/g,
-        isDarkMode ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.15)",
-      );
-
-    const svgBlob = new Blob([resolvedSvgString], { type: "image/svg+xml;charset=utf-8" });
-    const URL = window.URL || window.webkitURL || window;
-    const blobURL = URL.createObjectURL(svgBlob);
-    const image = new Image();
-
-    image.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = svgW;
-      canvas.height = svgH;
-      const context = canvas.getContext("2d");
-      if (context) {
-        context.fillStyle = bgColor;
-        context.fillRect(0, 0, svgW, svgH);
-        context.drawImage(image, 0, 0);
-        const png = canvas.toDataURL("image/png");
-        const downloadLink = document.createElement("a");
-        downloadLink.href = png;
-        downloadLink.download = `so-do-tu-duy-chuong-${chapterNumber}.png`;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-      }
-      URL.revokeObjectURL(blobURL);
-    };
-    image.src = blobURL;
-  };
-
   const handleSvgClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       setSelectedNode(null);
@@ -642,14 +578,6 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
             ) : (
               <Maximize2 className="h-4.5 w-4.5" />
             )}
-          </button>
-
-          <button
-            onClick={exportAsPNG}
-            title="Tải ảnh sơ đồ (PNG)"
-            className="flex h-8 w-8 items-center justify-center rounded-sm text-foreground hover:bg-muted transition-colors"
-          >
-            <Download className="h-4.5 w-4.5" />
           </button>
         </div>
 

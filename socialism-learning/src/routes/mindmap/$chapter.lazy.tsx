@@ -1,5 +1,5 @@
 import { createLazyFileRoute, getRouteApi, Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Printer, BookOpen, Brain } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, Brain } from "lucide-react";
 import { MindmapRenderer } from "@/features/mindmap/MindmapRenderer";
 import { AppShell } from "@/components/AppShell";
 
@@ -68,14 +68,6 @@ function MindmapChapterPage() {
             >
               <BookOpen className="h-4 w-4" aria-hidden />
               Đọc nội dung
-            </Link>
-            <Link
-              to="/print/$chapter"
-              params={{ chapter: String(chapter.n) }}
-              className="inline-flex items-center gap-2 rounded-sm border border-border bg-card px-4 py-2 text-sm font-medium transition hover:border-primary hover:text-primary"
-            >
-              <Printer className="h-4 w-4" aria-hidden />
-              In chương
             </Link>
           </div>
         </div>
