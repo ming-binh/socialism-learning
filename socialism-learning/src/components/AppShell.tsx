@@ -6,8 +6,8 @@ import { chapters as months } from "@/features/learning/data/chapters";
 function useDarkMode() {
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== "undefined") {
-      return document.documentElement.classList.contains("dark") || 
-             localStorage.getItem("theme") === "dark";
+      return document.documentElement.classList.contains("dark") ||
+        localStorage.getItem("theme") === "dark";
     }
     return false;
   });
@@ -102,6 +102,13 @@ export function AppShell({ extra, showProgress = false }: Props) {
     };
   }, [drawerOpen]);
 
+  let headerBgClass = "bg-background/95";
+  if (pathname.startsWith("/quiz")) {
+    headerBgClass = "bg-rose-50/95 dark:bg-rose-950/90";
+  } else if (pathname.startsWith("/mindmap")) {
+    headerBgClass = "bg-sky-50/95 dark:bg-sky-950/90";
+  }
+
   return (
     <>
       {/* Reading progress bar */}
@@ -112,7 +119,8 @@ export function AppShell({ extra, showProgress = false }: Props) {
       {/* Sticky navbar */}
       <nav
         className={[
-          "sticky top-0 z-50 border-b border-transparent bg-background/95 backdrop-blur transition-all duration-300",
+          "sticky top-0 z-50 border-b border-transparent backdrop-blur transition-all duration-300",
+          headerBgClass,
           scrolled && "border-border shadow-sm",
         ]
           .filter(Boolean)
@@ -124,7 +132,7 @@ export function AppShell({ extra, showProgress = false }: Props) {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center text-foreground transition hover:opacity-80"
+            className="flex items-center gap-1.5 text-foreground transition hover:opacity-80"
             aria-label="Về trang chủ"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shrink-0">
