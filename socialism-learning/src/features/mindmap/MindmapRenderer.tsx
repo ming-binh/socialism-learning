@@ -109,12 +109,12 @@ function buildTree(quotes: DailyQuote[], chapterTitle: string): Node {
 }
 
 // ── Layout constants ──────────────────────────────────────────
-const CX = 550; // SVG center x for radial layout
-const CY = 420; // SVG center y for radial layout
-const R1 = 175; // radius for level-1 nodes (context)
-const R2 = 340; // radius for level-2 nodes (leaves)
-const SVG_W = 1100;
-const SVG_H = 840;
+const CX = 600; // SVG center x for radial layout
+const CY = 500; // SVG center y for radial layout
+const R1 = 180; // radius for level-1 nodes (context)
+const R2 = 430; // radius for level-2 nodes (leaves)
+const SVG_W = 1200;
+const SVG_H = 1000;
 
 type Layout2 = {
   id: string;
@@ -161,7 +161,8 @@ function computeLayout(
       const y = CY + R1 * Math.sin(angle);
 
       const n2 = branch.children.length;
-      const spread = Math.PI / Math.max(n2, 1) / 1.35;
+      const maxRange = (2 * Math.PI / n1) * 0.82;
+      const spread = Math.min(0.26, maxRange / Math.max(n2 - 1, 1));
 
       const children: Layout2[] = isCollapsed
         ? []
@@ -206,9 +207,9 @@ function computeLayout(
       }
     });
 
-    const leafSpacing = 58;
-    const treeH = Math.max(840, totalLeaves * leafSpacing + 120);
-    const treeW = 1100;
+    const leafSpacing = 65;
+    const treeH = Math.max(1000, totalLeaves * leafSpacing + 120);
+    const treeW = 1200;
 
     let currentLeafIdx = 0;
 
@@ -231,7 +232,7 @@ function computeLayout(
               author: leaf.author,
               day: leaf.day,
               month: leaf.month,
-              x: 840, // Leaf column
+              x: 940, // Leaf column
               y,
               angle: 0,
               color: `hsl(${hue} 50% 40%)`,
@@ -252,7 +253,7 @@ function computeLayout(
       return {
         id: branchId,
         label: branch.label,
-        x: 460, // Branch column
+        x: 500, // Branch column
         y: branchY,
         angle: 0,
         color,
@@ -789,7 +790,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                 rootToBranchPath = `M ${CX} ${CY} L ${branch.x} ${branch.y}`;
               } else {
                 const rootRightEdge = 130 + 100;
-                const branchLeftEdge = 460 - 90;
+                const branchLeftEdge = 500 - 90;
                 const rootCenterY = svgH / 2;
                 rootToBranchPath = `M ${rootRightEdge} ${rootCenterY} C ${(rootRightEdge + branchLeftEdge) / 2} ${rootCenterY}, ${(rootRightEdge + branchLeftEdge) / 2} ${branch.y}, ${branchLeftEdge} ${branch.y}`;
               }
@@ -819,8 +820,8 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                     if (layoutMode === "radial") {
                       branchToLeafPath = `M ${branch.x} ${branch.y} L ${leaf.x} ${leaf.y}`;
                     } else {
-                      const branchRightEdge = 460 + 90;
-                      const leafLeftEdge = 840 - 120;
+                      const branchRightEdge = 500 + 90;
+                      const leafLeftEdge = 940 - 120;
                       branchToLeafPath = `M ${branchRightEdge} ${branch.y} C ${(branchRightEdge + leafLeftEdge) / 2} ${branch.y}, ${(branchRightEdge + leafLeftEdge) / 2} ${leaf.y}, ${leafLeftEdge} ${leaf.y}`;
                     }
 
@@ -990,7 +991,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                     ) : (
                       <>
                         <rect
-                          x={370}
+                          x={410}
                           y={branch.y - 24}
                           width={180}
                           height={48}
@@ -1007,7 +1008,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                         />
                         {isSelected && (
                           <rect
-                            x={366}
+                            x={406}
                             y={branch.y - 28}
                             width={188}
                             height={56}
@@ -1019,7 +1020,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                             className="animate-pulse"
                           />
                         )}
-                        <foreignObject x={378} y={branch.y - 18} width={164} height={36}>
+                        <foreignObject x={418} y={branch.y - 18} width={164} height={36}>
                           <div className="h-full flex items-center justify-center text-center font-sans font-bold text-[10px] leading-snug text-white select-none overflow-hidden text-ellipsis line-clamp-3">
                             {branch.label}
                           </div>
@@ -1155,7 +1156,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                     ) : (
                       <>
                         <rect
-                          x={720}
+                          x={820}
                           y={leaf.y - 20}
                           width={240}
                           height={40}
@@ -1175,14 +1176,14 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                         />
                         {/* A small decorative left indicator bar using branch color */}
                         <rect
-                          x={720.5}
+                          x={820.5}
                           y={leaf.y - 19.5}
                           width={5}
                           height={39}
                           rx={1}
                           fill={branch.color}
                         />
-                        <foreignObject x={733} y={leaf.y - 15} width={220} height={30}>
+                        <foreignObject x={833} y={leaf.y - 15} width={220} height={30}>
                           <div
                             className="h-full flex items-center justify-start text-left font-sans text-[11px] leading-normal select-none overflow-hidden text-ellipsis line-clamp-2 pr-1"
                             style={{
