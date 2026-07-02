@@ -54,7 +54,7 @@ export function ProjectIntroDialog({ members, open, onOpenChange }: ProjectIntro
         <div className="space-y-6 px-6 pb-6 pt-8 sm:px-8">
           <DialogHeader className="text-left">
             <div className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-              Group 4
+              Nhóm chủ đề 2
             </div>
             <DialogTitle className="font-display text-3xl leading-tight md:text-4xl">
               Giới thiệu dự án 365 Ngày

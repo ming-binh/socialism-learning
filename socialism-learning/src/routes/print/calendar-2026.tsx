@@ -691,7 +691,7 @@ function CoverPage({ months, year }: { months: CalendarMonth[]; year: number }) 
 
         <footer className="calendar-page-footer">
           <span>365 ngày, một ý tưởng</span>
-          <span>MLN131 · Group 4</span>
+          <span>MLN131 · Nhóm chủ đề 2</span>
         </footer>
       </div>
     </section>
@@ -813,7 +813,7 @@ function FinalPage({ year }: { year: number }) {
             </p>
 
             <div className="calendar-member-panel">
-              <h3>Thành viên Group 4</h3>
+              <h3>Thành viên Nhóm chủ đề 2</h3>
               <ul>
                 {GROUP_MEMBERS.map((member) => (
                   <li key={member}>{member}</li>
@@ -825,7 +825,7 @@ function FinalPage({ year }: { year: number }) {
 
         <footer className="calendar-page-footer">
           <span>365 ngày, một ý tưởng</span>
-          <span>MLN131 · Group 4</span>
+          <span>MLN131 · Nhóm chủ đề 2</span>
         </footer>
       </div>
     </section>

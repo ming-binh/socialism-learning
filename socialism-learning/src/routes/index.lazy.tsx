@@ -356,7 +356,7 @@ function Home() {
             </p>
             <div className="border-l-2 border-primary pl-5">
               <div className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-                Group 4
+                Nhóm chủ đề 2
               </div>
               <ul className="mt-3 grid gap-2 text-sm text-foreground sm:grid-cols-2">
                 {groupMembers.map((member) => (
