@@ -101,7 +101,7 @@ export function AppShell({ extra, showProgress = false }: Props) {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-[30px] text-foreground transition hover:opacity-80"
+            className="flex items-center gap-[100px] text-foreground transition hover:opacity-80"
             aria-label="Về trang chủ"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shrink-0">
