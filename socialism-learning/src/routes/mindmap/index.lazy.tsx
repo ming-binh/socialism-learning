@@ -23,8 +23,8 @@ function MindmapIndexPage() {
           </div>
           <h1 className="font-display text-5xl leading-none md:text-7xl">Sơ đồ tư duy</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            Xem cấu trúc nội dung từng chủ đề dưới dạng sơ đồ tỏa tròn — từ khái niệm trung tâm
-            đến các nhánh ý tưởng cụ thể.
+            Xem cấu trúc nội dung từng chủ đề dưới dạng sơ đồ tỏa tròn — từ khái niệm trung tâm đến
+            các nhánh ý tưởng cụ thể.
           </p>
         </div>
 

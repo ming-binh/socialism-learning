@@ -8,8 +8,7 @@ export const Route = createFileRoute("/mindmap/")({
       { title: "Sơ đồ tư duy | 365 Ngày CNXHKH" },
       {
         name: "description",
-        content:
-          "Xem sơ đồ tư duy trực quan cho từng chủ đề Chủ nghĩa Xã hội Khoa học.",
+        content: "Xem sơ đồ tư duy trực quan cho từng chủ đề Chủ nghĩa Xã hội Khoa học.",
       },
     ],
   }),

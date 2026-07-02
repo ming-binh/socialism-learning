@@ -34,8 +34,8 @@ function QuizIndexPage() {
           </div>
           <h1 className="font-display text-5xl leading-none md:text-7xl">Quiz trắc nghiệm</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            Chọn một chủ đề để kiểm tra kiến thức. Mỗi lượt gồm 10 câu hỏi được tạo ngẫu nhiên
-            từ nội dung bài học.
+            Chọn một chủ đề để kiểm tra kiến thức. Mỗi lượt gồm 10 câu hỏi được tạo ngẫu nhiên từ
+            nội dung bài học.
           </p>
         </div>
 

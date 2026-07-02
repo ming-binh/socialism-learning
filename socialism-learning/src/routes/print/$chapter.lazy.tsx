@@ -53,8 +53,7 @@ function PrintChapterPage() {
         {/* Cover */}
         <header className="mb-10 border-b-2 border-primary pb-8 print:mb-8">
           <div className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-primary print:text-black">
-            365 Ngày cùng Chủ nghĩa Xã hội Khoa học · Chủ đề{" "}
-            {String(chapter.n).padStart(2, "0")}
+            365 Ngày cùng Chủ nghĩa Xã hội Khoa học · Chủ đề {String(chapter.n).padStart(2, "0")}
           </div>
           <h1 className="font-display text-4xl leading-tight print:text-3xl">{chapter.title}</h1>
           <p className="mt-3 text-base text-muted-foreground print:text-gray-600">{chapter.sub}</p>

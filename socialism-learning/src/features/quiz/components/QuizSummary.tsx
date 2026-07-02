@@ -101,10 +101,7 @@ export function QuizSummary({ results, chapter, chapterTitle, onRetry, onRetryWr
           <h3 className="mb-4 font-display text-xl">Các câu trả lời sai</h3>
           <div className="grid gap-4">
             {wrongResults.map((result, i) => (
-              <div
-                key={result.question.id}
-                className="rounded-sm border border-border bg-card p-5"
-              >
+              <div key={result.question.id} className="rounded-sm border border-border bg-card p-5">
                 <div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-primary">
                   {result.question.context}
                 </div>

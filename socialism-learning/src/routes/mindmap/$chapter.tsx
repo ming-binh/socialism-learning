@@ -23,8 +23,7 @@ export const Route = createFileRoute("/mindmap/$chapter")({
       },
       {
         name: "description",
-        content:
-          loaderData?.chapter.sub ?? "Sơ đồ tư duy trực quan Chủ nghĩa Xã hội Khoa học.",
+        content: loaderData?.chapter.sub ?? "Sơ đồ tư duy trực quan Chủ nghĩa Xã hội Khoa học.",
       },
     ],
   }),

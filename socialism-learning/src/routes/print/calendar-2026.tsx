@@ -41,15 +41,12 @@ const QR_IMAGE_LOCAL_SRC = "/calendar-web-qr.png";
 const QR_IMAGE_DEPLOYED_SRC = `${import.meta.env.BASE_URL}calendar-web-qr.png`;
 
 const GROUP_MEMBERS = [
-  "Trịnh Gia Phúc",
-  "Nguyễn Hoàng Long",
+  "Nguyễn Văn Đông",
+  "Trần Trọng Quang",
   "Vũ Quốc Khánh",
-  "Phạm Vũ Anh Hưng",
-  "Đinh Duy Trọng",
-  "Lê Ánh Ngọc",
-  "Nguyễn Việt Anh",
-  "Ngô Yến Dương",
-  "Phạm Duy Hưng",
+  "Bùi Trọng Thịnh",
+  "Thân Bình Minh",
+  "Nguyễn Thị Trà My",
 ];
 
 const PRINT_CALENDAR_CSS = String.raw`

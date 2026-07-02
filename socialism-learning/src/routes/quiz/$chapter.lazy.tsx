@@ -21,7 +21,13 @@ export const Route = createLazyFileRoute("/quiz/$chapter")({
 });
 
 type QuizState =
-  | { phase: "playing"; questions: QuizQuestion[]; currentIndex: number; results: QuizResult[]; selectedIndex: number | null }
+  | {
+      phase: "playing";
+      questions: QuizQuestion[];
+      currentIndex: number;
+      results: QuizResult[];
+      selectedIndex: number | null;
+    }
   | { phase: "done"; results: QuizResult[] };
 
 function buildInitialState(questions: QuizQuestion[]): QuizState {
@@ -91,9 +97,7 @@ function QuizChapterPage() {
 
   const handleRetryWrong = useCallback(() => {
     if (quizState.phase !== "done") return;
-    const wrongQuestions = quizState.results
-      .filter((r) => !r.isCorrect)
-      .map((r) => r.question);
+    const wrongQuestions = quizState.results.filter((r) => !r.isCorrect).map((r) => r.question);
     if (wrongQuestions.length === 0) return;
     setQuizState(buildInitialState(wrongQuestions));
   }, [quizState]);
@@ -113,7 +117,6 @@ function QuizChapterPage() {
       />
 
       <div className="mx-auto max-w-3xl px-4 py-10 md:px-6 md:py-16">
-
         {/* Header */}
         <div className="mb-10">
           <div className="mb-2 text-xs font-medium uppercase tracking-[0.3em] text-primary">

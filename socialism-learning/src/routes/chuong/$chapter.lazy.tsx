@@ -40,7 +40,6 @@ function ChapterPage() {
       />
 
       <section className="mx-auto max-w-7xl px-4 py-10 md:px-6 md:py-16">
-
         <div className="mt-12 grid gap-10 md:grid-cols-12 md:items-end">
           <div className="md:col-span-8">
             <div className="mb-5 text-xs font-medium uppercase tracking-[0.3em] text-primary">

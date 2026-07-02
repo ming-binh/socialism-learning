@@ -13,9 +13,7 @@ export function QuizProgress({ current, total, correct }: Props) {
         <span>
           {current} / {total} câu
         </span>
-        <span className="font-medium text-primary">
-          ✓ {correct} đúng
-        </span>
+        <span className="font-medium text-primary">✓ {correct} đúng</span>
       </div>
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
         <div

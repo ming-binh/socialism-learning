@@ -19,7 +19,6 @@ export const Route = createLazyFileRoute("/")({
   component: Home,
 });
 
-
 const monthNames = [
   "tháng 1",
   "tháng 2",
@@ -38,15 +37,12 @@ const monthNames = [
 const dayLabels = ["Hôm nay", "Ngày mai", "Ngày kế tiếp"];
 
 const groupMembers = [
-  "Trịnh Gia Phúc",
-  "Nguyễn Hoàng Long",
+  "Nguyễn Văn Đông",
+  "Trần Trọng Quang",
   "Vũ Quốc Khánh",
-  "Phạm Vũ Anh Hưng",
-  "Đinh Duy Trọng",
-  "Lê Ánh Ngọc",
-  "Nguyễn Việt Anh",
-  "Ngô Yến Dương",
-  "Phạm Duy Hưng",
+  "Bùi Trọng Thịnh",
+  "Thân Bình Minh",
+  "Nguyễn Thị Trà My",
 ];
 
 function formatQuoteDate(quote: DailyQuote) {
@@ -159,9 +155,7 @@ function Home() {
       />
 
       {/* ── Home page section sub-nav ── */}
-      <div
-        className="sticky top-[53px] z-40 border-b border-border/50 bg-background/95 backdrop-blur"
-      >
+      <div className="sticky top-[53px] z-40 border-b border-border/50 bg-background/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2 md:px-6">
           {/* Chapter sub-nav */}
           <button
@@ -444,7 +438,10 @@ function Home() {
       </section>
 
       {/* ── Quote section ── */}
-      <section id="suyngam" className="mx-auto max-w-5xl scroll-mt-28 px-4 py-32 text-center md:px-6">
+      <section
+        id="suyngam"
+        className="mx-auto max-w-5xl scroll-mt-28 px-4 py-32 text-center md:px-6"
+      >
         <div className="reveal">
           <StarIcon className="mx-auto h-6 w-6 text-primary" />
           {todaysQuote ? (
@@ -457,7 +454,9 @@ function Home() {
               </div>
             </>
           ) : (
-            <p className="mt-8 text-lg text-muted-foreground">Nội dung hôm nay đang được cập nhật.</p>
+            <p className="mt-8 text-lg text-muted-foreground">
+              Nội dung hôm nay đang được cập nhật.
+            </p>
           )}
         </div>
       </section>
@@ -475,8 +474,8 @@ function Home() {
           </div>
           <div className="reveal reveal-delay-2 space-y-5 text-base leading-relaxed text-muted-foreground">
             <p>
-              <strong className="text-foreground">365 Ngày</strong> là dự án đọc &amp; suy ngẫm về Chủ
-              nghĩa Xã hội Khoa học, được biên soạn cho độc giả Việt Nam đương đại — sinh viên,
+              <strong className="text-foreground">365 Ngày</strong> là dự án đọc &amp; suy ngẫm về
+              Chủ nghĩa Xã hội Khoa học, được biên soạn cho độc giả Việt Nam đương đại — sinh viên,
               người lao động, người làm chính sách, và bất kỳ ai quan tâm tới câu hỏi:{" "}
               <em>xã hội này đang đi về đâu?</em>
             </p>

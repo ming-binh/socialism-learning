@@ -39,7 +39,6 @@ function MindmapChapterPage() {
       />
 
       <div className="mx-auto max-w-7xl px-4 py-10 md:px-6 md:py-16">
-
         {/* Header */}
         <div className="mb-10 grid gap-8 md:grid-cols-12 md:items-end">
           <div className="md:col-span-8">
@@ -82,11 +81,7 @@ function MindmapChapterPage() {
         </div>
 
         {/* Mindmap */}
-        <MindmapRenderer
-          quotes={quotes}
-          chapterTitle={chapter.title}
-          chapterNumber={chapter.n}
-        />
+        <MindmapRenderer quotes={quotes} chapterTitle={chapter.title} chapterNumber={chapter.n} />
 
         {/* Chapter nav */}
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-8 text-sm">

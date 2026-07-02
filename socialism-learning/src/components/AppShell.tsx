@@ -81,11 +81,7 @@ export function AppShell({ extra, showProgress = false }: Props) {
     <>
       {/* Reading progress bar */}
       {showProgress && (
-        <div
-          className="reading-progress"
-          style={{ width: `${progress}%` }}
-          aria-hidden="true"
-        />
+        <div className="reading-progress" style={{ width: `${progress}%` }} aria-hidden="true" />
       )}
 
       {/* Sticky navbar */}
@@ -177,11 +173,7 @@ export function AppShell({ extra, showProgress = false }: Props) {
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
-          <Link
-            to="/"
-            className="flex items-center gap-2.5"
-            onClick={() => setDrawerOpen(false)}
-          >
+          <Link to="/" className="flex items-center gap-2.5" onClick={() => setDrawerOpen(false)}>
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
               <BookOpen className="h-4 w-4" aria-hidden />
             </div>
@@ -239,10 +231,7 @@ export function AppShell({ extra, showProgress = false }: Props) {
           <Link
             key={item.to}
             to={item.to}
-            className={[
-              "mobile-bottom-bar-item",
-              isActive(item.to) && "active",
-            ]
+            className={["mobile-bottom-bar-item", isActive(item.to) && "active"]
               .filter(Boolean)
               .join(" ")}
             aria-current={isActive(item.to) ? "page" : undefined}

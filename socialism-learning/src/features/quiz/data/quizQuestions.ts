@@ -48,9 +48,7 @@ export function generateQuizQuestions(
 ): QuizQuestion[] {
   if (quotes.length < 4) return [];
 
-  const rng = seededRandom(
-    quotes.reduce((acc, q) => acc + q.month * 31 + q.day, 0) + seedOffset,
-  );
+  const rng = seededRandom(quotes.reduce((acc, q) => acc + q.month * 31 + q.day, 0) + seedOffset);
 
   // Pick `count` questions randomly from all available quotes
   const shuffledQuotes = shuffle(quotes, rng).slice(0, Math.min(count, quotes.length));

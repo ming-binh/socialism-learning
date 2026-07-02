@@ -1,19 +1,19 @@
 import { useRef, useState, useEffect } from "react";
-import { 
-  ZoomIn, 
-  ZoomOut, 
-  RotateCcw, 
-  Download, 
-  Search, 
-  Copy, 
-  Check, 
-  Maximize2, 
-  Minimize2, 
-  Network, 
-  GitMerge, 
-  X, 
-  BookOpen, 
-  User
+import {
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+  Download,
+  Search,
+  Copy,
+  Check,
+  Maximize2,
+  Minimize2,
+  Network,
+  GitMerge,
+  X,
+  BookOpen,
+  User,
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import type { DailyQuote } from "@/features/learning/data/dailyQuotes";
@@ -116,35 +116,35 @@ const R2 = 340; // radius for level-2 nodes (leaves)
 const SVG_W = 1100;
 const SVG_H = 840;
 
-type Layout2 = { 
-  id: string; 
-  label: string; 
-  fullText?: string; 
+type Layout2 = {
+  id: string;
+  label: string;
+  fullText?: string;
   author?: string;
   day?: number;
   month?: number;
-  x: number; 
-  y: number; 
-  angle: number; 
-  color: string; 
+  x: number;
+  y: number;
+  angle: number;
+  color: string;
 };
 
-type Layout1 = { 
+type Layout1 = {
   id: string;
-  label: string; 
-  x: number; 
-  y: number; 
-  angle: number; 
-  color: string; 
-  children: Layout2[]; 
+  label: string;
+  x: number;
+  y: number;
+  angle: number;
+  color: string;
+  children: Layout2[];
   originalChildCount: number;
 };
 
 function computeLayout(
-  root: Node, 
+  root: Node,
   layoutMode: "radial" | "tree",
   colorTheme: ColorTheme,
-  collapsedBranches: Set<string>
+  collapsedBranches: Set<string>,
 ): { l1: Layout1[]; svgW: number; svgH: number } {
   const hues = THEME_HUES[colorTheme];
 
@@ -163,8 +163,8 @@ function computeLayout(
       const n2 = branch.children.length;
       const spread = Math.PI / Math.max(n2, 1) / 1.35;
 
-      const children: Layout2[] = isCollapsed 
-        ? [] 
+      const children: Layout2[] = isCollapsed
+        ? []
         : branch.children.map((leaf, li) => {
             const leafAngle = angle + (li - (n2 - 1) / 2) * spread;
             return {
@@ -181,15 +181,15 @@ function computeLayout(
             };
           });
 
-      return { 
-        id: branchId, 
-        label: branch.label, 
-        x, 
-        y, 
-        angle, 
-        color, 
+      return {
+        id: branchId,
+        label: branch.label,
+        x,
+        y,
+        angle,
+        color,
         children,
-        originalChildCount: n2
+        originalChildCount: n2,
       };
     });
 
@@ -209,7 +209,7 @@ function computeLayout(
     const leafSpacing = 58;
     const treeH = Math.max(840, totalLeaves * leafSpacing + 120);
     const treeW = 1100;
-    
+
     let currentLeafIdx = 0;
 
     const l1: Layout1[] = root.children.map((branch, bi) => {
@@ -257,7 +257,7 @@ function computeLayout(
         angle: 0,
         color,
         children,
-        originalChildCount: n2
+        originalChildCount: n2,
       };
     });
 
@@ -289,7 +289,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
   const [layoutMode, setLayoutMode] = useState<"radial" | "tree">("radial");
   const [colorTheme, setColorTheme] = useState<ColorTheme>("marxist");
   const [collapsedBranches, setCollapsedBranches] = useState<Set<string>>(new Set());
-  
+
   // Dynamic config based on active theme
   const themeConfig = THEME_CONFIGS[colorTheme];
 
@@ -336,7 +336,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
       if (match) {
         setSelectedNode({
           ...selectedNode,
-          totalChildren: match.children.length
+          totalChildren: match.children.length,
         });
       }
     }
@@ -401,7 +401,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
     const zoomFactor = 1.15;
     const nextScale = e.deltaY < 0 ? scale * zoomFactor : scale / zoomFactor;
     const boundedScale = Math.max(0.35, Math.min(4.5, nextScale));
-    
+
     // Zoom relative to pointer
     const svg = svgRef.current;
     if (!svg) return;
@@ -421,17 +421,17 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
   const handleZoom = (factor: number) => {
     const nextScale = scale * factor;
     const boundedScale = Math.max(0.35, Math.min(4.5, nextScale));
-    
+
     // Zoom toward the center
     const container = containerRef.current;
     if (!container) return;
     const width = container.clientWidth;
     const height = container.clientHeight;
-    
+
     const dx = width / 2 - translateX;
     const dy = height / 2 - translateY;
     const ratio = boundedScale / scale;
-    
+
     setTranslateX(width / 2 - dx * ratio);
     setTranslateY(height / 2 - dy * ratio);
     setScale(boundedScale);
@@ -469,7 +469,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
           return branch.children.some(
             (leaf) =>
               leaf.label.toLowerCase().includes(q) ||
-              (leaf.fullText && leaf.fullText.toLowerCase().includes(q))
+              (leaf.fullText && leaf.fullText.toLowerCase().includes(q)),
           );
         })
       );
@@ -479,12 +479,12 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
       const bi = parseInt(id.replace("branch-", ""), 10);
       const branch = l1[bi];
       if (!branch) return false;
-      
+
       const branchMatches = branch.label.toLowerCase().includes(q);
       const anyChildMatches = branch.children.some(
         (leaf) =>
           leaf.label.toLowerCase().includes(q) ||
-          (leaf.fullText && leaf.fullText.toLowerCase().includes(q))
+          (leaf.fullText && leaf.fullText.toLowerCase().includes(q)),
       );
       return branchMatches || anyChildMatches;
     }
@@ -510,7 +510,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
     if (!svg) return;
 
     const clonedSvg = svg.cloneNode(true) as SVGSVGElement;
-    
+
     // Reset transform on cloned svg group
     const innerGroup = clonedSvg.querySelector("#zoom-group");
     if (innerGroup) {
@@ -522,27 +522,29 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
     clonedSvg.setAttribute("height", String(svgH));
 
     const svgString = new XMLSerializer().serializeToString(clonedSvg);
-    
+
     const isDarkMode = document.documentElement.classList.contains("dark");
     const bgColor = isDarkMode ? "#161312" : "#FAF8F5";
     const fgColor = isDarkMode ? "#EAE5E3" : "#2E2422";
     const cardColor = isDarkMode ? "#201B1A" : "#FFFFFF";
-    const primaryColor = colorTheme === "marxist" 
-      ? (isDarkMode ? "#c04e3e" : "#743027") 
-      : themeConfig.primary;
+    const primaryColor =
+      colorTheme === "marxist" ? (isDarkMode ? "#c04e3e" : "#743027") : themeConfig.primary;
 
     let resolvedSvgString = svgString
       .replace(/var\(--color-background\)/g, bgColor)
       .replace(/var\(--color-foreground\)/g, fgColor)
       .replace(/var\(--color-card\)/g, cardColor)
       .replace(/var\(--color-primary\)/g, primaryColor)
-      .replace(/var\(--color-border\)/g, isDarkMode ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.15)");
+      .replace(
+        /var\(--color-border\)/g,
+        isDarkMode ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.15)",
+      );
 
     const svgBlob = new Blob([resolvedSvgString], { type: "image/svg+xml;charset=utf-8" });
     const URL = window.URL || window.webkitURL || window;
     const blobURL = URL.createObjectURL(svgBlob);
     const image = new Image();
-    
+
     image.onload = () => {
       const canvas = document.createElement("canvas");
       canvas.width = svgW;
@@ -582,15 +584,14 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
   const rootFill = colorTheme === "marxist" ? "var(--color-primary)" : themeConfig.primary;
 
   return (
-    <div 
-      ref={containerRef} 
+    <div
+      ref={containerRef}
       className={`relative flex flex-col md:flex-row overflow-hidden rounded-md border border-border bg-card shadow-sm transition-all duration-300 ${
         isFullscreen ? "fixed inset-0 z-50 h-screen w-screen" : "h-[650px] w-full"
       }`}
     >
       {/* ── Main Canvas View ── */}
       <div className="relative flex-1 h-full overflow-hidden bg-background/50">
-        
         {/* Floating Controls (Top Left) */}
         <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 rounded-md bg-card/85 p-1.5 shadow-md border border-border backdrop-blur-md">
           <button
@@ -614,7 +615,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
           >
             <RotateCcw className="h-4.5 w-4.5" />
           </button>
-          
+
           <div className="h-px bg-border my-1" />
 
           <button
@@ -622,7 +623,11 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
             title={isFullscreen ? "Thoát toàn màn hình" : "Toàn màn hình"}
             className="flex h-8 w-8 items-center justify-center rounded-sm text-foreground hover:bg-muted transition-colors"
           >
-            {isFullscreen ? <Minimize2 className="h-4.5 w-4.5" /> : <Maximize2 className="h-4.5 w-4.5" />}
+            {isFullscreen ? (
+              <Minimize2 className="h-4.5 w-4.5" />
+            ) : (
+              <Maximize2 className="h-4.5 w-4.5" />
+            )}
           </button>
 
           <button
@@ -641,8 +646,8 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
             <button
               onClick={() => setLayoutMode("radial")}
               className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-sm transition-all ${
-                layoutMode === "radial" 
-                  ? "bg-primary text-primary-foreground shadow-sm" 
+                layoutMode === "radial"
+                  ? "bg-primary text-primary-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -652,8 +657,8 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
             <button
               onClick={() => setLayoutMode("tree")}
               className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-sm transition-all ${
-                layoutMode === "tree" 
-                  ? "bg-primary text-primary-foreground shadow-sm" 
+                layoutMode === "tree"
+                  ? "bg-primary text-primary-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -661,7 +666,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
               Cây ngang
             </button>
           </div>
-          
+
           <div className="h-px w-full sm:h-6 sm:w-px bg-border my-0.5 sm:my-0 sm:mx-1" />
 
           {/* Theme Palette Picker */}
@@ -675,9 +680,13 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                   onClick={() => setColorTheme(theme)}
                   title={cfg.name}
                   className={`relative flex h-6 w-6 items-center justify-center rounded-sm transition-all ${
-                    isActive ? "ring-2 ring-ring scale-110 shadow-sm" : "opacity-60 hover:opacity-100"
+                    isActive
+                      ? "ring-2 ring-ring scale-110 shadow-sm"
+                      : "opacity-60 hover:opacity-100"
                   }`}
-                  style={{ backgroundColor: theme === "marxist" ? "var(--color-primary)" : cfg.primary }}
+                  style={{
+                    backgroundColor: theme === "marxist" ? "var(--color-primary)" : cfg.primary,
+                  }}
                 >
                   {isActive && <Check className="h-3 w-3 text-white stroke-[3.5]" />}
                 </button>
@@ -698,7 +707,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
               className="w-full bg-transparent text-sm border-none focus:outline-none text-foreground"
             />
             {searchQuery && (
-              <button 
+              <button
                 onClick={() => setSearchQuery("")}
                 className="hover:text-primary transition-colors text-muted-foreground"
               >
@@ -755,7 +764,6 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
           </defs>
 
           <g id="zoom-group" style={zoomGroupStyle}>
-            
             {/* ── CONNECTION LINES ── */}
             {l1.map((branch, bi) => {
               const isBranchActive = isNodeActive(branch.id);
@@ -779,7 +787,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                     d={rootToBranchPath}
                     fill="none"
                     stroke={branch.color}
-                    strokeWidth={isBranchActive && isSearchActive ? 4 : (hoverState ? 3 : 2)}
+                    strokeWidth={isBranchActive && isSearchActive ? 4 : hoverState ? 3 : 2}
                     strokeLinecap="round"
                     opacity={branchOpacity}
                     className="transition-all duration-300"
@@ -809,12 +817,15 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                         d={branchToLeafPath}
                         fill="none"
                         stroke={branch.color}
-                        strokeWidth={isLeafActive && isSearchActive ? 3.5 : (isSelected ? 2.5 : 1.2)}
+                        strokeWidth={isLeafActive && isSearchActive ? 3.5 : isSelected ? 2.5 : 1.2}
                         strokeLinecap="round"
                         opacity={leafLineOpacity}
                         className="transition-all duration-300"
                         style={{
-                          strokeDasharray: layoutMode === "radial" && !hoverState && !isSelected ? "4 3" : undefined,
+                          strokeDasharray:
+                            layoutMode === "radial" && !hoverState && !isSelected
+                              ? "4 3"
+                              : undefined,
                         }}
                       />
                     );
@@ -825,30 +836,41 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
 
             {/* ── CENTRAL ROOT NODE ── */}
             <g
-              onClick={() => setSelectedNode({
-                type: "root",
-                id: "root",
-                label: chapterTitle,
-                color: rootFill,
-                totalChildren: l1.length
-              })}
+              onClick={() =>
+                setSelectedNode({
+                  type: "root",
+                  id: "root",
+                  label: chapterTitle,
+                  color: rootFill,
+                  totalChildren: l1.length,
+                })
+              }
               className="cursor-pointer group animate-fade-in"
               opacity={isSearchActive ? (isRootActive ? 1.0 : 0.15) : 1.0}
             >
               {layoutMode === "radial" ? (
                 <>
-                  <circle 
-                    cx={CX} 
-                    cy={CY} 
-                    r={60} 
+                  <circle
+                    cx={CX}
+                    cy={CY}
+                    r={60}
                     fill={rootFill}
-                    className="transition-all duration-300 shadow-md group-hover:scale-105 group-hover:brightness-110" 
+                    className="transition-all duration-300 shadow-md group-hover:scale-105 group-hover:brightness-110"
                     stroke={selectedNode?.id === "root" ? "var(--color-foreground)" : "white"}
                     strokeWidth={selectedNode?.id === "root" ? 3.5 : 1}
                     filter={selectedNode?.id === "root" ? "url(#glow-filter)" : undefined}
                   />
                   {selectedNode?.id === "root" && (
-                    <circle cx={CX} cy={CY} r={65} fill="none" stroke={rootFill} strokeWidth={1.5} opacity={0.6} className="animate-pulse" />
+                    <circle
+                      cx={CX}
+                      cy={CY}
+                      r={65}
+                      fill="none"
+                      stroke={rootFill}
+                      strokeWidth={1.5}
+                      opacity={0.6}
+                      className="animate-pulse"
+                    />
                   )}
                   <foreignObject x={CX - 52} y={CY - 35} width={104} height={70}>
                     <div className="h-full flex items-center justify-center text-center font-display font-bold text-[12px] leading-tight text-white select-none overflow-hidden text-ellipsis line-clamp-4 px-1">
@@ -871,7 +893,18 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                     filter={selectedNode?.id === "root" ? "url(#glow-filter)" : undefined}
                   />
                   {selectedNode?.id === "root" && (
-                    <rect x={26} y={svgH / 2 - 36} width={208} height={72} rx={14} fill="none" stroke={rootFill} strokeWidth={1.5} opacity={0.6} className="animate-pulse" />
+                    <rect
+                      x={26}
+                      y={svgH / 2 - 36}
+                      width={208}
+                      height={72}
+                      rx={14}
+                      fill="none"
+                      stroke={rootFill}
+                      strokeWidth={1.5}
+                      opacity={0.6}
+                      className="animate-pulse"
+                    />
                   )}
                   <foreignObject x={38} y={svgH / 2 - 24} width={184} height={48}>
                     <div className="h-full flex items-center justify-center text-center font-display font-bold text-[12.5px] leading-snug text-white select-none overflow-hidden text-ellipsis line-clamp-3">
@@ -892,14 +925,16 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
               return (
                 <g key={`branch-wrapper-${bi}`}>
                   <g
-                    onClick={() => setSelectedNode({
-                      type: "branch",
-                      id: branch.id,
-                      label: branch.label,
-                      color: branch.color,
-                      totalChildren: branch.children.length,
-                      originalChildCount: branch.originalChildCount
-                    })}
+                    onClick={() =>
+                      setSelectedNode({
+                        type: "branch",
+                        id: branch.id,
+                        label: branch.label,
+                        color: branch.color,
+                        totalChildren: branch.children.length,
+                        originalChildCount: branch.originalChildCount,
+                      })
+                    }
                     onMouseEnter={() => setHoveredBranch(bi)}
                     onMouseLeave={() => setHoveredBranch(null)}
                     className="cursor-pointer group"
@@ -915,10 +950,23 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                           className="transition-all duration-300 shadow-sm group-hover:scale-105 group-hover:brightness-110"
                           stroke={isSelected ? "var(--color-foreground)" : "white"}
                           strokeWidth={isSelected ? 3.5 : 1}
-                          filter={isSelected || (isSearchActive && isBranchActive) ? "url(#glow-filter)" : undefined}
+                          filter={
+                            isSelected || (isSearchActive && isBranchActive)
+                              ? "url(#glow-filter)"
+                              : undefined
+                          }
                         />
                         {isSelected && (
-                          <circle cx={branch.x} cy={branch.y} r={50} fill="none" stroke={branch.color} strokeWidth={1.5} opacity={0.6} className="animate-pulse" />
+                          <circle
+                            cx={branch.x}
+                            cy={branch.y}
+                            r={50}
+                            fill="none"
+                            stroke={branch.color}
+                            strokeWidth={1.5}
+                            opacity={0.6}
+                            className="animate-pulse"
+                          />
                         )}
                         <foreignObject x={branch.x - 39} y={branch.y - 32} width={78} height={64}>
                           <div className="h-full flex items-center justify-center text-center font-sans font-bold text-[9.5px] leading-tight text-white select-none overflow-hidden text-ellipsis line-clamp-4">
@@ -938,10 +986,25 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                           className="transition-all duration-300 shadow-sm group-hover:scale-105 group-hover:brightness-110"
                           stroke={isSelected ? "var(--color-foreground)" : "white"}
                           strokeWidth={isSelected ? 3 : 1}
-                          filter={isSelected || (isSearchActive && isBranchActive) ? "url(#glow-filter)" : undefined}
+                          filter={
+                            isSelected || (isSearchActive && isBranchActive)
+                              ? "url(#glow-filter)"
+                              : undefined
+                          }
                         />
                         {isSelected && (
-                          <rect x={366} y={branch.y - 28} width={188} height={56} rx={10} fill="none" stroke={branch.color} strokeWidth={1.5} opacity={0.6} className="animate-pulse" />
+                          <rect
+                            x={366}
+                            y={branch.y - 28}
+                            width={188}
+                            height={56}
+                            rx={10}
+                            fill="none"
+                            stroke={branch.color}
+                            strokeWidth={1.5}
+                            opacity={0.6}
+                            className="animate-pulse"
+                          />
                         )}
                         <foreignObject x={378} y={branch.y - 18} width={164} height={36}>
                           <div className="h-full flex items-center justify-center text-center font-sans font-bold text-[10px] leading-snug text-white select-none overflow-hidden text-ellipsis line-clamp-3">
@@ -953,7 +1016,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                   </g>
 
                   {/* Collapse / Expand Handle (+/- Button) */}
-                  {branch.originalChildCount > 0 && (
+                  {branch.originalChildCount > 0 &&
                     (() => {
                       // Calculate handle position
                       let handleX = 0;
@@ -1006,8 +1069,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                           )}
                         </g>
                       );
-                    })()
-                  )}
+                    })()}
                 </g>
               );
             })}
@@ -1023,16 +1085,18 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                 return (
                   <g
                     key={`leaf-node-${bi}-${li}`}
-                    onClick={() => setSelectedNode({
-                      type: "leaf",
-                      id: leaf.id,
-                      label: leaf.label,
-                      fullText: leaf.fullText,
-                      author: leaf.author,
-                      day: leaf.day,
-                      month: leaf.month,
-                      color: branch.color
-                    })}
+                    onClick={() =>
+                      setSelectedNode({
+                        type: "leaf",
+                        id: leaf.id,
+                        label: leaf.label,
+                        fullText: leaf.fullText,
+                        author: leaf.author,
+                        day: leaf.day,
+                        month: leaf.month,
+                        color: branch.color,
+                      })
+                    }
                     className="cursor-pointer group"
                     opacity={leafOpacity}
                   >
@@ -1042,19 +1106,33 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                           cx={leaf.x}
                           cy={leaf.y}
                           r={30}
-                          fill={isSelected ? "var(--color-card)" : (isHovered ? branch.color : "var(--color-card)")}
+                          fill={
+                            isSelected
+                              ? "var(--color-card)"
+                              : isHovered
+                                ? branch.color
+                                : "var(--color-card)"
+                          }
                           className="transition-all duration-300 shadow-sm group-hover:scale-105"
                           stroke={isSelected ? "var(--color-foreground)" : branch.color}
                           strokeWidth={isSelected ? 3 : 1.5}
                           opacity={isSelected ? 1 : 0.9}
-                          filter={isSelected || (isSearchActive && isLeafActive) ? "url(#glow-filter)" : undefined}
+                          filter={
+                            isSelected || (isSearchActive && isLeafActive)
+                              ? "url(#glow-filter)"
+                              : undefined
+                          }
                         />
                         <foreignObject x={leaf.x - 26} y={leaf.y - 22} width={52} height={44}>
-                          <div 
+                          <div
                             className="h-full flex items-center justify-center text-center font-sans text-[7.5px] leading-snug select-none overflow-hidden text-ellipsis line-clamp-3"
                             style={{
-                              color: isSelected ? "var(--color-foreground)" : (isHovered ? "white" : "var(--color-foreground)"),
-                              fontWeight: isSelected || isHovered ? 600 : 400
+                              color: isSelected
+                                ? "var(--color-foreground)"
+                                : isHovered
+                                  ? "white"
+                                  : "var(--color-foreground)",
+                              fontWeight: isSelected || isHovered ? 600 : 400,
                             }}
                           >
                             {leaf.label}
@@ -1076,7 +1154,11 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                           style={{
                             fillOpacity: isSelected ? 1 : 0.9,
                           }}
-                          filter={isSelected || (isSearchActive && isLeafActive) ? "url(#glow-filter)" : undefined}
+                          filter={
+                            isSelected || (isSearchActive && isLeafActive)
+                              ? "url(#glow-filter)"
+                              : undefined
+                          }
                         />
                         {/* A small decorative left indicator bar using branch color */}
                         <rect
@@ -1088,11 +1170,11 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                           fill={branch.color}
                         />
                         <foreignObject x={733} y={leaf.y - 15} width={220} height={30}>
-                          <div 
+                          <div
                             className="h-full flex items-center justify-start text-left font-sans text-[11px] leading-normal select-none overflow-hidden text-ellipsis line-clamp-2 pr-1"
                             style={{
                               color: "var(--color-foreground)",
-                              fontWeight: isSelected ? 600 : 400
+                              fontWeight: isSelected ? 600 : 400,
                             }}
                           >
                             {leaf.label}
@@ -1114,13 +1196,13 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
       </div>
 
       {/* ── Detail Sidebar (Glassmorphic Slide-in) ── */}
-      <div 
+      <div
         className={`relative w-full md:w-[380px] h-[220px] md:h-full border-t md:border-t-0 md:border-l border-border bg-card/90 backdrop-blur-md flex flex-col transition-all duration-300 shrink-0 ${
           selectedNode ? "translate-y-0 md:translate-x-0" : "hidden"
         }`}
       >
         {/* Close Button */}
-        <button 
+        <button
           onClick={() => setSelectedNode(null)}
           className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors p-1 hover:bg-muted rounded-sm"
           title="Đóng bảng chi tiết"
@@ -1132,20 +1214,23 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
         <div className="flex-1 overflow-y-auto p-6 flex flex-col justify-between h-full">
           {selectedNode ? (
             <div className="space-y-5 flex-1 flex flex-col justify-between">
-              
               {/* Top part */}
               <div className="space-y-4">
-                
                 {/* Header Tag */}
                 <div className="flex items-center gap-2">
-                  <span 
-                    className="inline-block h-2.5 w-2.5 rounded-full shrink-0" 
-                    style={{ backgroundColor: selectedNode.color.startsWith('var') ? 'var(--color-primary)' : selectedNode.color }} 
+                  <span
+                    className="inline-block h-2.5 w-2.5 rounded-full shrink-0"
+                    style={{
+                      backgroundColor: selectedNode.color.startsWith("var")
+                        ? "var(--color-primary)"
+                        : selectedNode.color,
+                    }}
                   />
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
                     {selectedNode.type === "root" && "Chủ đề chính"}
                     {selectedNode.type === "branch" && "Nhánh ý kiến / Bối cảnh"}
-                    {selectedNode.type === "leaf" && `Ngày ${String(selectedNode.day).padStart(2, "0")} / Th. ${selectedNode.month}`}
+                    {selectedNode.type === "leaf" &&
+                      `Ngày ${String(selectedNode.day).padStart(2, "0")} / Th. ${selectedNode.month}`}
                   </span>
                 </div>
 
@@ -1178,36 +1263,43 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                       </span>
                       <span className="font-bold text-foreground">
                         {selectedNode.totalChildren}
-                        {selectedNode.type === "branch" && selectedNode.originalChildCount !== undefined && (
-                          <span className="text-muted-foreground font-normal"> / {selectedNode.originalChildCount}</span>
-                        )}
+                        {selectedNode.type === "branch" &&
+                          selectedNode.originalChildCount !== undefined && (
+                            <span className="text-muted-foreground font-normal">
+                              {" "}
+                              / {selectedNode.originalChildCount}
+                            </span>
+                          )}
                       </span>
                     </div>
 
-                    {selectedNode.type === "branch" && selectedNode.originalChildCount && selectedNode.originalChildCount > 0 && (
-                      <div className="pt-2 border-t border-border/50">
-                        <button
-                          onClick={() => toggleBranchCollapse(selectedNode.id)}
-                          className="w-full inline-flex items-center justify-center gap-2 rounded-sm bg-card hover:bg-muted border border-border px-3 py-1.5 text-[11px] font-semibold text-foreground transition-all"
-                        >
-                          {collapsedBranches.has(selectedNode.id) ? (
-                            <>
-                              <Maximize2 className="h-3 w-3" />
-                              Mở rộng các bài học
-                            </>
-                          ) : (
-                            <>
-                              <Minimize2 className="h-3 w-3" />
-                              Thu gọn các bài học
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    )}
+                    {selectedNode.type === "branch" &&
+                      selectedNode.originalChildCount &&
+                      selectedNode.originalChildCount > 0 && (
+                        <div className="pt-2 border-t border-border/50">
+                          <button
+                            onClick={() => toggleBranchCollapse(selectedNode.id)}
+                            className="w-full inline-flex items-center justify-center gap-2 rounded-sm bg-card hover:bg-muted border border-border px-3 py-1.5 text-[11px] font-semibold text-foreground transition-all"
+                          >
+                            {collapsedBranches.has(selectedNode.id) ? (
+                              <>
+                                <Maximize2 className="h-3 w-3" />
+                                Mở rộng các bài học
+                              </>
+                            ) : (
+                              <>
+                                <Minimize2 className="h-3 w-3" />
+                                Thu gọn các bài học
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      )}
 
                     {selectedNode.type === "root" && (
                       <div className="text-muted-foreground text-[11px] leading-relaxed pt-2 border-t border-border/50">
-                        Chứa toàn bộ cấu trúc lý luận của chủ đề bài học. Nhấp vào các nhánh con và lá trích dẫn xung quanh để đi sâu vào chi tiết.
+                        Chứa toàn bộ cấu trúc lý luận của chủ đề bài học. Nhấp vào các nhánh con và
+                        lá trích dẫn xung quanh để đi sâu vào chi tiết.
                       </div>
                     )}
                   </div>
@@ -1221,8 +1313,8 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                   <button
                     onClick={() => handleCopy(selectedNode.fullText || "")}
                     className={`w-full inline-flex items-center justify-center gap-2 rounded-sm px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all border ${
-                      copied 
-                        ? "bg-emerald-600 border-emerald-600 text-white" 
+                      copied
+                        ? "bg-emerald-600 border-emerald-600 text-white"
                         : "bg-card hover:bg-muted border-border text-foreground"
                     }`}
                   >
@@ -1257,7 +1349,8 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
             <div className="h-full flex flex-col items-center justify-center text-center text-muted-foreground px-4 py-10">
               <Network className="h-10 w-10 mb-4 text-muted-foreground/40 stroke-[1.5]" />
               <p className="text-xs leading-relaxed max-w-[240px]">
-                Chọn bất kỳ nút nào trên sơ đồ để xem đầy đủ nội dung bài học, tác giả và bối cảnh chi tiết.
+                Chọn bất kỳ nút nào trên sơ đồ để xem đầy đủ nội dung bài học, tác giả và bối cảnh
+                chi tiết.
               </p>
             </div>
           )}
