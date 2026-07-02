@@ -79,8 +79,6 @@ function Home() {
   const { today, todaysQuote, dailyLessons, monthQuotes, remainingLessons } =
     routeApi.useLoaderData();
   const currentMonth = months[today.month - 1];
-  const [chapterMenuOpen, setChapterMenuOpen] = useState(false);
-  const [activeChapter, setActiveChapter] = useState<number | null>(null);
   const [projectDialogOpen, setProjectDialogOpen] = useState(false);
   const [projectDialogMounted, setProjectDialogMounted] = useState(false);
 
@@ -106,26 +104,6 @@ function Home() {
     setProjectDialogOpen(true);
   };
 
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const handleSectionLink = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
-    event.preventDefault();
-    setChapterMenuOpen(false);
-    scrollToSection(id);
-  };
-
-  const handleChapterSelect = (chapter: number) => {
-    setChapterMenuOpen(false);
-    setActiveChapter(chapter);
-    scrollToSection(`chuong-${chapter}`);
-
-    window.setTimeout(() => {
-      setActiveChapter((currentChapter) => (currentChapter === chapter ? null : currentChapter));
-    }, 1_400);
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground paper-grain" ref={pageRef}>
       {projectDialogMounted && (
@@ -143,131 +121,16 @@ function Home() {
         showProgress
         extra={
           <div className="flex items-center gap-1">
-            <a
-              href="#ngay"
-              onClick={(event: MouseEvent<HTMLAnchorElement>) => handleSectionLink(event, "ngay")}
+            <Link
+              to="/"
+              hash="ngay"
               className="btn-shimmer rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
             >
               Bắt đầu đọc
-            </a>
+            </Link>
           </div>
         }
       />
-
-      {/* ── Home page section sub-nav ── */}
-      <div className="sticky top-[53px] z-40 border-b border-border/50 bg-background/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2 md:px-6">
-          {/* Chapter sub-nav */}
-          <button
-            type="button"
-            onClick={() => setChapterMenuOpen((isOpen) => !isOpen)}
-            className={[
-              "inline-flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-              chapterMenuOpen && "bg-secondary text-primary",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            aria-expanded={chapterMenuOpen}
-            aria-controls="chapter-menu"
-          >
-            <span className="text-xs uppercase tracking-wider">Chủ đề</span>
-            <ChevronDown
-              className={["h-3.5 w-3.5 transition-transform", chapterMenuOpen && "rotate-180"]
-                .filter(Boolean)
-                .join(" ")}
-              aria-hidden
-            />
-          </button>
-          <a
-            href="#ngay"
-            onClick={(event) => handleSectionLink(event, "ngay")}
-            className="shrink-0 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-          >
-            Bài học hôm nay
-          </a>
-          <a
-            href="#suyngam"
-            onClick={(event) => handleSectionLink(event, "suyngam")}
-            className="shrink-0 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-          >
-            Suy ngẫm
-          </a>
-          <a
-            href="#vesach"
-            onClick={(event) => handleSectionLink(event, "vesach")}
-            className="shrink-0 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-          >
-            Về dự án
-          </a>
-          <Link
-            to="/quiz/"
-            className="inline-flex shrink-0 items-center gap-1.5 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-          >
-            <Brain className="h-3.5 w-3.5" aria-hidden />
-            Quiz
-          </Link>
-          <Link
-            to="/mindmap/"
-            className="inline-flex shrink-0 items-center gap-1.5 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-          >
-            <Network className="h-3.5 w-3.5" aria-hidden />
-            Sơ đồ
-          </Link>
-        </div>
-
-        {/* Chapter dropdown */}
-        <div
-          id="chapter-menu"
-          className={[
-            "chapter-menu-shell border-t border-border bg-card/95 shadow-lg backdrop-blur",
-            chapterMenuOpen ? "chapter-menu-open" : "chapter-menu-closed",
-          ].join(" ")}
-          aria-hidden={!chapterMenuOpen}
-        >
-          <div className="mx-auto max-w-7xl px-4 py-5 md:px-6">
-            <div className="grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
-              {months.map((m) => {
-                const menuItemClass =
-                  "group/menu flex min-h-28 flex-col items-start bg-background p-4 text-left transition hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-card";
-                const menuItemContent = (
-                  <>
-                    <span className="font-display text-2xl leading-none text-primary transition group-hover/menu:text-primary-foreground group-focus/menu:text-primary-foreground">
-                      {String(m.n).padStart(2, "0")}
-                    </span>
-                    <span className="mt-3 font-display text-lg leading-tight">{m.title}</span>
-                    <span className="mt-1 text-xs leading-relaxed text-muted-foreground transition group-hover/menu:text-primary-foreground/75 group-focus/menu:text-primary-foreground/75">
-                      {m.sub}
-                    </span>
-                  </>
-                );
-
-                return m.isPublished ? (
-                  <Link
-                    key={`chapter-menu-${m.n}`}
-                    to="/chuong/$chapter"
-                    params={{ chapter: String(m.n) }}
-                    tabIndex={chapterMenuOpen ? 0 : -1}
-                    onClick={() => setChapterMenuOpen(false)}
-                    className={menuItemClass}
-                  >
-                    {menuItemContent}
-                  </Link>
-                ) : (
-                  <button
-                    key={`chapter-menu-${m.n}`}
-                    type="button"
-                    tabIndex={chapterMenuOpen ? 0 : -1}
-                    onClick={() => handleChapterSelect(m.n)}
-                    className={menuItemClass}
-                  >
-                    {menuItemContent}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* ── Hero ── */}
       <section className="hero-shell relative isolate overflow-hidden">
