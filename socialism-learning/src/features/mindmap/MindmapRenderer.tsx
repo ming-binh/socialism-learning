@@ -342,6 +342,19 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
     }
   }, [collapsedBranches]);
 
+  // Prevent default page scroll on wheel (React onWheel is passive)
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    
+    const preventScroll = (e: WheelEvent) => {
+      e.preventDefault();
+    };
+    
+    svg.addEventListener("wheel", preventScroll, { passive: false });
+    return () => svg.removeEventListener("wheel", preventScroll);
+  }, []);
+
   // Copy helper
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
