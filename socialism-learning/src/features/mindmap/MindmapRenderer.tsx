@@ -868,7 +868,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                     cy={CY}
                     r={60}
                     fill={rootFill}
-                    className="transition-all duration-300 shadow-md group-hover:scale-105 group-hover:brightness-110"
+                    className="transition-all duration-300 shadow-md group-hover:scale-105 origin-center [transform-box:fill-box]"
                     stroke={selectedNode?.id === "root" ? "var(--color-foreground)" : "white"}
                     strokeWidth={selectedNode?.id === "root" ? 3.5 : 1}
                     filter={selectedNode?.id === "root" ? "url(#glow-filter)" : undefined}
@@ -900,7 +900,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                     height={64}
                     rx={12}
                     fill={rootFill}
-                    className="transition-all duration-300 shadow-md group-hover:scale-105 group-hover:brightness-110"
+                    className="transition-all duration-300 shadow-md group-hover:scale-105 origin-center [transform-box:fill-box]"
                     stroke={selectedNode?.id === "root" ? "var(--color-foreground)" : "white"}
                     strokeWidth={selectedNode?.id === "root" ? 3 : 1}
                     filter={selectedNode?.id === "root" ? "url(#glow-filter)" : undefined}
@@ -960,7 +960,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                           cy={branch.y}
                           r={45}
                           fill={branch.color}
-                          className="transition-all duration-300 shadow-sm group-hover:scale-105 group-hover:brightness-110"
+                          className="transition-all duration-300 shadow-sm group-hover:scale-105 origin-center [transform-box:fill-box]"
                           stroke={isSelected ? "var(--color-foreground)" : "white"}
                           strokeWidth={isSelected ? 3.5 : 1}
                           filter={
@@ -996,7 +996,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                           height={48}
                           rx={8}
                           fill={branch.color}
-                          className="transition-all duration-300 shadow-sm group-hover:scale-105 group-hover:brightness-110"
+                          className="transition-all duration-300 shadow-sm group-hover:scale-105 origin-center [transform-box:fill-box]"
                           stroke={isSelected ? "var(--color-foreground)" : "white"}
                           strokeWidth={isSelected ? 3 : 1}
                           filter={
@@ -1126,7 +1126,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                                 ? branch.color
                                 : "var(--color-card)"
                           }
-                          className="transition-all duration-300 shadow-sm group-hover:scale-105"
+                          className="transition-all duration-300 shadow-sm group-hover:scale-105 origin-center [transform-box:fill-box]"
                           stroke={isSelected ? "var(--color-foreground)" : branch.color}
                           strokeWidth={isSelected ? 3 : 1.5}
                           opacity={isSelected ? 1 : 0.9}
@@ -1161,7 +1161,7 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
                           height={40}
                           rx={6}
                           fill="var(--color-card)"
-                          className="transition-all duration-300 shadow-sm group-hover:scale-[1.02] group-hover:brightness-105"
+                          className="transition-all duration-300 shadow-sm group-hover:scale-[1.02] origin-center [transform-box:fill-box]"
                           stroke={isSelected ? "var(--color-foreground)" : branch.color}
                           strokeWidth={isSelected ? 3 : 1.5}
                           style={{
