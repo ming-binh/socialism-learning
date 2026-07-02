@@ -43,7 +43,6 @@ const QR_IMAGE_DEPLOYED_SRC = `${import.meta.env.BASE_URL}calendar-web-qr.png`;
 const GROUP_MEMBERS = [
   "Nguyễn Văn Đông",
   "Trần Trọng Quang",
-  "Vũ Quốc Khánh",
   "Bùi Trọng Thịnh",
   "Thân Bình Minh",
   "Nguyễn Thị Trà My",

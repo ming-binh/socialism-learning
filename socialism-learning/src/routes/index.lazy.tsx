@@ -39,7 +39,6 @@ const dayLabels = ["Hôm nay", "Ngày mai", "Ngày kế tiếp"];
 const groupMembers = [
   "Nguyễn Văn Đông",
   "Trần Trọng Quang",
-  "Vũ Quốc Khánh",
   "Bùi Trọng Thịnh",
   "Thân Bình Minh",
   "Nguyễn Thị Trà My",
