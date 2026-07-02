@@ -104,6 +104,15 @@ function Home() {
     setProjectDialogOpen(true);
   };
 
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleSectionLink = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    scrollToSection(id);
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground paper-grain" ref={pageRef}>
       {projectDialogMounted && (
@@ -205,7 +214,6 @@ function Home() {
               id={`chuong-${m.n}`}
               className={[
                 `reveal reveal-delay-${Math.min(i + 1, 12)} group relative scroll-mt-32 bg-card p-8 transition-all duration-200 hover:bg-primary hover:text-primary-foreground card-scale`,
-                activeChapter === m.n && "chapter-card-selected",
               ]
                 .filter(Boolean)
                 .join(" ")}
