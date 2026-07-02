@@ -101,14 +101,14 @@ export function AppShell({ extra, showProgress = false }: Props) {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2.5 text-foreground transition hover:opacity-80"
+            className="flex items-center gap-[30px] text-foreground transition hover:opacity-80"
             aria-label="Về trang chủ"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shrink-0">
               <BookOpen className="h-4 w-4" aria-hidden />
             </div>
             <span
-              className="flex items-baseline gap-1.5 leading-none"
+              className="flex items-center gap-1.5 leading-none"
               style={{
                 fontFamily: '"Playfair Display", "Cormorant Garamond", Georgia, serif',
               }}
