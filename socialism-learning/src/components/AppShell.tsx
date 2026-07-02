@@ -1,7 +1,29 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Brain, Network, BookOpen, Home, X, ChevronDown } from "lucide-react";
+import { Brain, Network, BookOpen, Home, X, ChevronDown, Moon, Sun } from "lucide-react";
 import { chapters as months } from "@/features/learning/data/chapters";
+
+function useDarkMode() {
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== "undefined") {
+      return document.documentElement.classList.contains("dark") || 
+             localStorage.getItem("theme") === "dark";
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
+
+  return [isDark, setIsDark] as const;
+}
 
 type NavItem = {
   to: string;
@@ -33,6 +55,7 @@ export function AppShell({ extra, showProgress = false }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
   const [chapterMenuOpen, setChapterMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useDarkMode();
 
   const pathname = useRouterState({
     select: (s) => s.location.pathname,
@@ -101,14 +124,14 @@ export function AppShell({ extra, showProgress = false }: Props) {
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-[100px] text-foreground transition hover:opacity-80"
+            className="flex items-center text-foreground transition hover:opacity-80"
             aria-label="Về trang chủ"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shrink-0">
               <BookOpen className="h-4 w-4" aria-hidden />
             </div>
             <span
-              className="flex items-center gap-1.5 leading-none"
+              className="ml-[30px] flex items-center gap-1.5 leading-none"
               style={{
                 fontFamily: '"Playfair Display", "Cormorant Garamond", Georgia, serif',
               }}
@@ -124,6 +147,15 @@ export function AppShell({ extra, showProgress = false }: Props) {
 
           {/* Extra slot (desktop) + hamburger */}
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsDark(!isDark)}
+              className="flex h-9 w-9 items-center justify-center rounded-md text-foreground hover:bg-secondary transition"
+              aria-label="Chuyển đổi chế độ tối"
+            >
+              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+
             {extra && <div className="hidden md:flex items-center gap-2">{extra}</div>}
 
             {/* Mobile hamburger button */}
