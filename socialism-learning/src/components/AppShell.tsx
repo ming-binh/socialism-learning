@@ -108,13 +108,13 @@ export function AppShell({ extra, showProgress = false }: Props) {
               <BookOpen className="h-4 w-4" aria-hidden />
             </div>
             <span
-              className="hidden sm:block leading-none"
+              className="flex items-baseline gap-1.5 leading-none"
               style={{
                 fontFamily: '"Playfair Display", "Cormorant Garamond", Georgia, serif',
               }}
             >
-              <span className="text-xl font-bold text-primary">365 ngày</span>
-              <span className="text-base font-semibold"> cùng Chủ nghĩa Xã hội Khoa học</span>
+              <span className="text-xl font-bold text-primary whitespace-nowrap">365 ngày</span>
+              <span className="text-base font-semibold">cùng Chủ nghĩa Xã hội Khoa học</span>
             </span>
           </Link>
 
