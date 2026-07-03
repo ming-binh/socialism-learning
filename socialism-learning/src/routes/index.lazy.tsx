@@ -387,7 +387,7 @@ function Home() {
       {/* ── Footer ── */}
       <footer className="border-t border-border pb-20 md:pb-0">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 text-xs uppercase tracking-[0.25em] text-muted-foreground md:flex-row md:px-6">
-          <div>© 2026 · 365 Ngày cùng CNXHKH</div>
+          <div>© 2026 · 365 Ngày cùng Chủ nghĩa Xã hội Khoa học</div>
           <div>Biên soạn cho cộng đồng học thuật Việt Nam</div>
         </div>
         <div className="banner-stripes h-1.5" />

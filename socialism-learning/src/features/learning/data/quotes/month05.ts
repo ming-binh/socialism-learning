@@ -5,7 +5,7 @@ const lessonBlocks: LessonBlock[] = [
     context: "Chương 3 - Khái niệm chủ nghĩa xã hội",
     points: [
       "CNXH được hiểu vừa là phong trào thực tiễn, vừa là học thuyết, vừa là chế độ xã hội tương lai.",
-      "Trong CNXHKH, CNXH là giai đoạn đầu của hình thái kinh tế - xã hội cộng sản chủ nghĩa.",
+      "Trong Chủ nghĩa Xã hội Khoa học, CNXH là giai đoạn đầu của hình thái kinh tế - xã hội cộng sản chủ nghĩa.",
       "CNXH ra đời từ yêu cầu giải quyết mâu thuẫn của chủ nghĩa tư bản và phát triển lực lượng sản xuất.",
       "Mục tiêu của CNXH là giải phóng con người khỏi áp bức, bóc lột và bất công xã hội.",
       "CNXH không phải khẩu hiệu đạo đức thuần túy mà là quá trình cải tạo các quan hệ xã hội.",

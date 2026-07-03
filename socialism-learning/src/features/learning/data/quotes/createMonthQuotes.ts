@@ -14,7 +14,7 @@ export function createMonthQuotes(month: number, blocks: LessonBlock[]): DailyQu
       month,
       day: nextDay++,
       quote,
-      author: block.author ?? "Giáo trình CNXHKH",
+      author: block.author ?? "Giáo trình Chủ nghĩa Xã hội Khoa học",
       context: block.context,
     })),
   );

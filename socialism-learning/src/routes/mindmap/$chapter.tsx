@@ -18,8 +18,8 @@ export const Route = createFileRoute("/mindmap/$chapter")({
     meta: [
       {
         title: loaderData
-          ? `Sơ đồ: ${loaderData.chapter.title} | 365 Ngày CNXHKH`
-          : "Sơ đồ tư duy | 365 Ngày CNXHKH",
+          ? `Sơ đồ: ${loaderData.chapter.title} | 365 Ngày Chủ nghĩa Xã hội Khoa học`
+          : "Sơ đồ tư duy | 365 Ngày Chủ nghĩa Xã hội Khoa học",
       },
       {
         name: "description",

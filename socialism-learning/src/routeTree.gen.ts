@@ -8,18 +8,13 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuizIndexRouteImport } from './routes/quiz/index'
 import { Route as MindmapIndexRouteImport } from './routes/mindmap/index'
 import { Route as QuizChapterRouteImport } from './routes/quiz/$chapter'
-import { Route as PrintCalendar2026RouteImport } from './routes/print/calendar-2026'
 import { Route as MindmapChapterRouteImport } from './routes/mindmap/$chapter'
 import { Route as ChuongChapterRouteImport } from './routes/chuong/$chapter'
-
-const PrintChapterLazyRouteImport = createFileRoute('/print/$chapter')()
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -36,23 +31,11 @@ const MindmapIndexRoute = MindmapIndexRouteImport.update({
   path: '/mindmap/',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/mindmap/index.lazy').then((d) => d.Route))
-const PrintChapterLazyRoute = PrintChapterLazyRouteImport.update({
-  id: '/print/$chapter',
-  path: '/print/$chapter',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() =>
-  import('./routes/print/$chapter.lazy').then((d) => d.Route),
-)
 const QuizChapterRoute = QuizChapterRouteImport.update({
   id: '/quiz/$chapter',
   path: '/quiz/$chapter',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/quiz/$chapter.lazy').then((d) => d.Route))
-const PrintCalendar2026Route = PrintCalendar2026RouteImport.update({
-  id: '/print/calendar-2026',
-  path: '/print/calendar-2026',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const MindmapChapterRoute = MindmapChapterRouteImport.update({
   id: '/mindmap/$chapter',
   path: '/mindmap/$chapter',
@@ -72,9 +55,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chuong/$chapter': typeof ChuongChapterRoute
   '/mindmap/$chapter': typeof MindmapChapterRoute
-  '/print/calendar-2026': typeof PrintCalendar2026Route
   '/quiz/$chapter': typeof QuizChapterRoute
-  '/print/$chapter': typeof PrintChapterLazyRoute
   '/mindmap/': typeof MindmapIndexRoute
   '/quiz/': typeof QuizIndexRoute
 }
@@ -82,9 +63,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chuong/$chapter': typeof ChuongChapterRoute
   '/mindmap/$chapter': typeof MindmapChapterRoute
-  '/print/calendar-2026': typeof PrintCalendar2026Route
   '/quiz/$chapter': typeof QuizChapterRoute
-  '/print/$chapter': typeof PrintChapterLazyRoute
   '/mindmap': typeof MindmapIndexRoute
   '/quiz': typeof QuizIndexRoute
 }
@@ -93,9 +72,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/chuong/$chapter': typeof ChuongChapterRoute
   '/mindmap/$chapter': typeof MindmapChapterRoute
-  '/print/calendar-2026': typeof PrintCalendar2026Route
   '/quiz/$chapter': typeof QuizChapterRoute
-  '/print/$chapter': typeof PrintChapterLazyRoute
   '/mindmap/': typeof MindmapIndexRoute
   '/quiz/': typeof QuizIndexRoute
 }
@@ -105,9 +82,7 @@ export interface FileRouteTypes {
     | '/'
     | '/chuong/$chapter'
     | '/mindmap/$chapter'
-    | '/print/calendar-2026'
     | '/quiz/$chapter'
-    | '/print/$chapter'
     | '/mindmap/'
     | '/quiz/'
   fileRoutesByTo: FileRoutesByTo
@@ -115,9 +90,7 @@ export interface FileRouteTypes {
     | '/'
     | '/chuong/$chapter'
     | '/mindmap/$chapter'
-    | '/print/calendar-2026'
     | '/quiz/$chapter'
-    | '/print/$chapter'
     | '/mindmap'
     | '/quiz'
   id:
@@ -125,9 +98,7 @@ export interface FileRouteTypes {
     | '/'
     | '/chuong/$chapter'
     | '/mindmap/$chapter'
-    | '/print/calendar-2026'
     | '/quiz/$chapter'
-    | '/print/$chapter'
     | '/mindmap/'
     | '/quiz/'
   fileRoutesById: FileRoutesById
@@ -136,9 +107,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChuongChapterRoute: typeof ChuongChapterRoute
   MindmapChapterRoute: typeof MindmapChapterRoute
-  PrintCalendar2026Route: typeof PrintCalendar2026Route
   QuizChapterRoute: typeof QuizChapterRoute
-  PrintChapterLazyRoute: typeof PrintChapterLazyRoute
   MindmapIndexRoute: typeof MindmapIndexRoute
   QuizIndexRoute: typeof QuizIndexRoute
 }
@@ -166,25 +135,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MindmapIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/print/$chapter': {
-      id: '/print/$chapter'
-      path: '/print/$chapter'
-      fullPath: '/print/$chapter'
-      preLoaderRoute: typeof PrintChapterLazyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/quiz/$chapter': {
       id: '/quiz/$chapter'
       path: '/quiz/$chapter'
       fullPath: '/quiz/$chapter'
       preLoaderRoute: typeof QuizChapterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/print/calendar-2026': {
-      id: '/print/calendar-2026'
-      path: '/print/calendar-2026'
-      fullPath: '/print/calendar-2026'
-      preLoaderRoute: typeof PrintCalendar2026RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mindmap/$chapter': {
@@ -208,22 +163,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChuongChapterRoute: ChuongChapterRoute,
   MindmapChapterRoute: MindmapChapterRoute,
-  PrintCalendar2026Route: PrintCalendar2026Route,
   QuizChapterRoute: QuizChapterRoute,
-  PrintChapterLazyRoute: PrintChapterLazyRoute,
   MindmapIndexRoute: MindmapIndexRoute,
   QuizIndexRoute: QuizIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

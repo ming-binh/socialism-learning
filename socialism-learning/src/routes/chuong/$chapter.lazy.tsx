@@ -1,5 +1,5 @@
 import { createLazyFileRoute, getRouteApi, Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Brain, Network, Printer } from "lucide-react";
+import { ArrowLeft, ArrowRight, Brain, Network } from "lucide-react";
 import type { DailyQuote } from "@/features/learning/data/dailyQuotes";
 import { AppShell } from "@/components/AppShell";
 
@@ -104,14 +104,6 @@ function ChapterPage() {
               >
                 <Network className="h-3.5 w-3.5" aria-hidden />
                 Sơ đồ tư duy
-              </Link>
-              <Link
-                to="/print/$chapter"
-                params={{ chapter: String(chapter.n) }}
-                className="inline-flex items-center gap-1.5 rounded-sm border border-border bg-card px-3 py-1.5 text-xs font-medium transition hover:border-primary hover:text-primary"
-              >
-                <Printer className="h-3.5 w-3.5" aria-hidden />
-                In chương
               </Link>
             </div>
           </div>

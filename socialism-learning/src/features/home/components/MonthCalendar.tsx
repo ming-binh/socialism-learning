@@ -211,7 +211,7 @@ export function MonthCalendar({ initialQuotes, today }: MonthCalendarProps) {
 
   return (
     <div
-      className="group/cal relative rounded-sm border border-border bg-card p-6 shadow-[8px_8px_0_0_oklch(0.46_0.19_27)] transition"
+      className="relative rounded-sm border border-border bg-card p-6 shadow-[8px_8px_0_0_oklch(0.46_0.19_27)] transition"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -259,27 +259,7 @@ export function MonthCalendar({ initialQuotes, today }: MonthCalendarProps) {
 
       <div className="my-5 h-px bg-border" />
 
-      <div className="transition-all duration-300 group-hover/cal:hidden">
-        {activeQuote ? (
-          <>
-            <blockquote className="font-display text-xl leading-snug">
-              “{activeQuote.quote}”
-            </blockquote>
-            <p className="mt-4 text-sm text-muted-foreground">
-              {activeQuote.author} · {activeQuote.context}
-            </p>
-          </>
-        ) : isMonthLoading ? (
-          <p className="text-sm text-muted-foreground">Đang tải nội dung tháng này.</p>
-        ) : (
-          <p className="text-sm text-muted-foreground">Nội dung ngày này đang được cập nhật.</p>
-        )}
-        <div className="mt-5 text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          {isMonthLoading ? "Đang tải nội dung" : `${monthQuotes.length} nội dung trong tháng này`}
-        </div>
-      </div>
-
-      <div className="hidden animate-fade-in group-hover/cal:block">
+      <div className="animate-fade-in">
         <div className="mb-2 grid grid-cols-7 gap-1 text-center text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
           {WEEKDAYS.map((day) => (
             <div key={day}>{day}</div>

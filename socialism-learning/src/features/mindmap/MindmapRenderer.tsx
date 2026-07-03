@@ -160,7 +160,7 @@ function computeLayout(
       const y = CY + R1 * Math.sin(angle);
 
       const n2 = branch.children.length;
-      const maxRange = (2 * Math.PI / n1) * 0.82;
+      const maxRange = ((2 * Math.PI) / n1) * 0.82;
       const spread = Math.min(0.26, maxRange / Math.max(n2 - 1, 1));
 
       const children: Layout2[] = isCollapsed
@@ -346,11 +346,11 @@ export function MindmapRenderer({ quotes, chapterTitle, chapterNumber }: Props) 
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
-    
+
     const preventScroll = (e: WheelEvent) => {
       e.preventDefault();
     };
-    
+
     svg.addEventListener("wheel", preventScroll, { passive: false });
     return () => svg.removeEventListener("wheel", preventScroll);
   }, []);

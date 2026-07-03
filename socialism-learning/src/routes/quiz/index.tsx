@@ -5,7 +5,7 @@ export const Route = createFileRoute("/quiz/")({
   loader: () => ({ chapters }),
   head: () => ({
     meta: [
-      { title: "Quiz Ôn Tập | 365 Ngày CNXHKH" },
+      { title: "Quiz Ôn Tập | 365 Ngày Chủ nghĩa Xã hội Khoa học" },
       {
         name: "description",
         content:

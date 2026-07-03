@@ -6,8 +6,10 @@ import { chapters as months } from "@/features/learning/data/chapters";
 function useDarkMode() {
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== "undefined") {
-      return document.documentElement.classList.contains("dark") ||
-        localStorage.getItem("theme") === "dark";
+      return (
+        document.documentElement.classList.contains("dark") ||
+        localStorage.getItem("theme") === "dark"
+      );
     }
     return false;
   });
@@ -150,8 +152,7 @@ export function AppShell({ extra, showProgress = false }: Props) {
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden items-center gap-1 md:flex">
-          </div>
+          <div className="hidden items-center gap-1 md:flex"></div>
 
           {/* Extra slot (desktop) + hamburger */}
           <div className="flex items-center gap-2">
@@ -325,7 +326,9 @@ export function AppShell({ extra, showProgress = false }: Props) {
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
               <BookOpen className="h-4 w-4" aria-hidden />
             </div>
-            <span className="font-display text-base font-semibold">365 ngày cùng Chủ nghĩa Xã hội Khoa học</span>
+            <span className="font-display text-base font-semibold">
+              365 ngày cùng Chủ nghĩa Xã hội Khoa học
+            </span>
           </Link>
           <button
             type="button"
@@ -368,7 +371,7 @@ export function AppShell({ extra, showProgress = false }: Props) {
         {/* Drawer footer */}
         <div className="border-t border-border px-5 py-4">
           <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            365 Ngày cùng CNXHKH · 2026
+            365 Ngày cùng Chủ nghĩa Xã hội Khoa học · 2026
           </p>
         </div>
       </div>

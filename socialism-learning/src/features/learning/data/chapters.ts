@@ -8,13 +8,13 @@ export type Chapter = {
 export const chapters: Chapter[] = [
   {
     n: 1,
-    title: "Nhập môn CNXHKH I",
+    title: "Nhập môn Chủ nghĩa Xã hội Khoa học I",
     sub: "Sự ra đời, điều kiện kinh tế - xã hội, tiền đề lý luận",
     isPublished: true,
   },
   {
     n: 2,
-    title: "Nhập môn CNXHKH II",
+    title: "Nhập môn Chủ nghĩa Xã hội Khoa học II",
     sub: "Các giai đoạn phát triển, đối tượng, phương pháp, ý nghĩa học tập",
     isPublished: true,
   },

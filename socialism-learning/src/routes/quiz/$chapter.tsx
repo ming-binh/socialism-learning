@@ -18,8 +18,8 @@ export const Route = createFileRoute("/quiz/$chapter")({
     meta: [
       {
         title: loaderData
-          ? `Quiz: ${loaderData.chapter.title} | 365 Ngày CNXHKH`
-          : "Quiz Ôn Tập | 365 Ngày CNXHKH",
+          ? `Quiz: ${loaderData.chapter.title} | 365 Ngày Chủ nghĩa Xã hội Khoa học`
+          : "Quiz Ôn Tập | 365 Ngày Chủ nghĩa Xã hội Khoa học",
       },
       {
         name: "description",

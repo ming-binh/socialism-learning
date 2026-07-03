@@ -5,7 +5,7 @@ export const Route = createFileRoute("/mindmap/")({
   loader: () => ({ chapters }),
   head: () => ({
     meta: [
-      { title: "Sơ đồ tư duy | 365 Ngày CNXHKH" },
+      { title: "Sơ đồ tư duy | 365 Ngày Chủ nghĩa Xã hội Khoa học" },
       {
         name: "description",
         content: "Xem sơ đồ tư duy trực quan cho từng chủ đề Chủ nghĩa Xã hội Khoa học.",
