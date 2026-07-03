@@ -146,7 +146,7 @@ function Home() {
                 className="hidden text-xs text-muted-foreground sm:block"
                 style={{ fontFamily: '"Source Serif 4", Georgia, serif', fontStyle: 'italic' }}
               >
-                Biên soạn cho cộng đồng học thuật Việt Nam
+                Lý luận soi đường — thực tiễn kiểm chứng
               </span>
             </div>
             <div className="text-right text-[10px] font-medium uppercase tracking-[0.15em] text-muted-foreground">
@@ -595,7 +595,7 @@ function Home() {
 
           {/* Center */}
           <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 text-center">
-            © 2026 · Biên soạn cho cộng đồng học thuật Việt Nam
+            © 2026 · Khoa học hóa tư tưởng xã hội chủ nghĩa
           </div>
 
           {/* Right – nav links */}
