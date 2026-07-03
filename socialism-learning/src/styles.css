@@ -50,14 +50,14 @@
   --radius: 0.25rem;
 
   /* Core surface colors */
-  --background: #FAFAF7;           /* Warm white / vellum */
+  --background: #F7F2E8;           /* Warm parchment / honey cream */
   --foreground: #1a1a1a;           /* Near-black ink */
-  --cream: #F5F0E8;                /* Warm cream */
+  --cream: #F7F2E8;                /* Warm cream */
   --ink: #1a1a1a;
 
   /* Navy primary – deep academic blue */
   --primary: #1B2A4A;
-  --primary-foreground: #F5F0E8;
+  --primary-foreground: #F7F2E8;
   --primary-hover: #243760;
 
   /* Gold accent – academic / amber */
@@ -66,22 +66,22 @@
   --accent-foreground: #1B2A4A;
 
   /* Card & surface */
-  --card: #FFFFFF;
+  --card: #FDF9F2;
   --card-foreground: #1a1a1a;
-  --popover: #FFFFFF;
+  --popover: #FDF9F2;
   --popover-foreground: #1a1a1a;
 
   /* Secondary – warm cream */
-  --secondary: #F2EDE3;
+  --secondary: #EEE7D6;
   --secondary-foreground: #2d2d2d;
 
   /* Muted */
-  --muted: #EDE8DF;
-  --muted-foreground: #6B6055;
+  --muted: #E8E0CE;
+  --muted-foreground: #6B5E4A;
 
   /* Borders & inputs */
-  --border: #DDD8CE;
-  --input: #DDD8CE;
+  --border: #D8CFBC;
+  --input: #D8CFBC;
   --ring: #1B2A4A;
 
   /* Destructive */
