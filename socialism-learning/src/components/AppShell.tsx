@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Brain, Network, BookOpen, Home, X, ChevronDown, Moon, Sun } from "lucide-react";
+import { Brain, Network, BookOpen, Home, X, ChevronDown, Moon, Sun, Menu } from "lucide-react";
 import { chapters as months } from "@/features/learning/data/chapters";
 
 function useDarkMode() {
@@ -36,7 +36,7 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   { to: "/", label: "Trang chủ", icon: <Home className="h-5 w-5" aria-hidden /> },
   { to: "/quiz/", label: "Quiz", icon: <Brain className="h-5 w-5" aria-hidden /> },
-  { to: "/mindmap/", label: "Sơ đồ", icon: <Network className="h-5 w-5" aria-hidden /> },
+  { to: "/mindmap/", label: "Sơ đồ tư duy", icon: <Network className="h-5 w-5" aria-hidden /> },
 ];
 
 const BOTTOM_NAV: NavItem[] = [
@@ -74,6 +74,7 @@ export function AppShell({ extra, showProgress = false }: Props) {
   // Close drawer on route change
   useEffect(() => {
     setDrawerOpen(false);
+    setChapterMenuOpen(false);
   }, [pathname]);
 
   // Scroll shadow + reading progress
@@ -94,22 +95,9 @@ export function AppShell({ extra, showProgress = false }: Props) {
 
   // Lock body scroll when drawer is open
   useEffect(() => {
-    if (drawerOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    document.body.style.overflow = drawerOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [drawerOpen]);
-
-  let headerBgClass = "bg-background/95";
-  if (pathname.startsWith("/quiz")) {
-    headerBgClass = "bg-rose-50/95 dark:bg-rose-950/90";
-  } else if (pathname.startsWith("/mindmap")) {
-    headerBgClass = "bg-sky-50/95 dark:bg-sky-950/90";
-  }
 
   return (
     <>
@@ -118,61 +106,91 @@ export function AppShell({ extra, showProgress = false }: Props) {
         <div className="reading-progress" style={{ width: `${progress}%` }} aria-hidden="true" />
       )}
 
-      {/* Sticky navbar */}
+      {/* ── Sticky Navbar ── */}
       <nav
         className={[
-          "sticky top-0 z-50 border-b border-transparent backdrop-blur transition-all duration-300",
-          headerBgClass,
-          scrolled && "border-border shadow-sm",
+          "sticky top-0 z-50 transition-all duration-300",
+          "bg-background/97 backdrop-blur-md",
+          scrolled && "shadow-[0_1px_0_0_var(--color-border)]",
         ]
           .filter(Boolean)
           .join(" ")}
         aria-label="Thanh điều hướng"
       >
-        <div className="banner-stripes h-1" />
+        {/* Top accent rule */}
+        <div className="nav-accent-rule" />
+
+        {/* Main nav row */}
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
-          {/* Logo */}
+
+          {/* ── Logo / Wordmark ── */}
           <Link
             to="/"
-            className="flex items-center gap-1.5 text-foreground transition hover:opacity-80"
+            className="group flex items-center gap-3 text-foreground transition-opacity hover:opacity-80"
             aria-label="Về trang chủ"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shrink-0">
+            {/* Icon badge */}
+            <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border-2 border-primary bg-primary text-primary-foreground transition-all group-hover:bg-primary/90">
               <BookOpen className="h-4 w-4" aria-hidden />
             </div>
-            <span
-              className="ml-[30px] flex items-center gap-1.5 leading-none"
-              style={{
-                fontFamily: '"Playfair Display", "Cormorant Garamond", Georgia, serif',
-              }}
-            >
-              <span className="text-xl font-bold text-primary whitespace-nowrap">365 ngày</span>
-              <span className="text-base font-semibold">cùng Chủ nghĩa Xã hội Khoa học</span>
-            </span>
+
+            {/* Text wordmark */}
+            <div className="hidden sm:block">
+              <div
+                className="nav-wordmark text-[13px] font-bold uppercase tracking-[0.14em] text-primary leading-none"
+              >
+                365 Ngày
+              </div>
+              <div
+                className="mt-0.5 font-serif text-[11px] tracking-[0.03em] text-muted-foreground leading-none"
+                style={{ fontFamily: '"Source Serif 4", Georgia, serif' }}
+              >
+                Chủ nghĩa Xã hội Khoa học
+              </div>
+            </div>
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden items-center gap-1 md:flex"></div>
+          {/* ── Desktop nav links ── */}
+          <div className="hidden items-center gap-6 md:flex">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={[
+                  "nav-link",
+                  isActive(item.to) && "active",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
 
-          {/* Extra slot (desktop) + hamburger */}
+          {/* ── Right controls ── */}
           <div className="flex items-center gap-2">
+            {/* Extra slot */}
+            {extra && (
+              <div className="hidden items-center gap-2 md:flex">{extra}</div>
+            )}
+
+            {/* Dark mode toggle */}
             <button
               type="button"
               onClick={() => setIsDark(!isDark)}
-              className="flex h-9 w-9 items-center justify-center rounded-md text-foreground hover:bg-secondary transition"
+              className="flex h-8 w-8 items-center justify-center rounded-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground"
               aria-label="Chuyển đổi chế độ tối"
             >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
 
-            {extra && <div className="hidden md:flex items-center gap-2">{extra}</div>}
-
-            {/* Mobile hamburger button */}
+            {/* Mobile hamburger */}
             <button
               type="button"
               onClick={() => setDrawerOpen((v) => !v)}
               className={[
-                "relative flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-md transition hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring md:hidden",
+                "relative flex h-8 w-8 flex-col items-center justify-center gap-[5px] rounded-sm transition hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring md:hidden",
                 drawerOpen && "hamburger-open",
               ]
                 .filter(Boolean)
@@ -188,88 +206,88 @@ export function AppShell({ extra, showProgress = false }: Props) {
           </div>
         </div>
 
-        {/* Home page section sub-nav moved to AppShell */}
-        <div className="border-t border-border/50 bg-background/95 backdrop-blur">
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2 md:px-6">
-            {/* Chapter sub-nav */}
+        {/* ── Sub-navigation bar (Navy) ── */}
+        <div className="subnav-bar border-t border-white/10">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-1 gap-y-1 px-4 py-1 md:px-6">
+
+            {/* Chapter dropdown trigger */}
             <button
               type="button"
               onClick={() => setChapterMenuOpen((isOpen) => !isOpen)}
               className={[
-                "inline-flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-                chapterMenuOpen && "bg-secondary text-primary",
+                "subnav-link inline-flex items-center gap-1.5 transition focus:outline-none",
+                chapterMenuOpen && "!text-white bg-white/10",
               ]
                 .filter(Boolean)
                 .join(" ")}
               aria-expanded={chapterMenuOpen}
               aria-controls="chapter-menu"
             >
-              <span className="text-xs uppercase tracking-wider">Chủ đề</span>
+              Chủ đề
               <ChevronDown
-                className={["h-3.5 w-3.5 transition-transform", chapterMenuOpen && "rotate-180"]
+                className={["h-3 w-3 transition-transform", chapterMenuOpen && "rotate-180"]
                   .filter(Boolean)
                   .join(" ")}
                 aria-hidden
               />
             </button>
-            <Link
-              to="/"
-              hash="ngay"
-              className="shrink-0 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-            >
+
+            <span className="text-white/20 select-none px-1">·</span>
+
+            <Link to="/" hash="ngay" className="subnav-link">
               Bài học hôm nay
             </Link>
-            <Link
-              to="/"
-              hash="suyngam"
-              className="shrink-0 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-            >
+            <Link to="/" hash="suyngam" className="subnav-link">
               Suy ngẫm
             </Link>
-            <Link
-              to="/"
-              hash="vesach"
-              className="shrink-0 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-            >
+            <Link to="/" hash="vesach" className="subnav-link">
               Về dự án
             </Link>
-            <Link
-              to="/quiz/"
-              className="inline-flex shrink-0 items-center gap-1.5 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-            >
-              <Brain className="h-3.5 w-3.5" aria-hidden />
+
+            <span className="text-white/20 select-none px-1">·</span>
+
+            <Link to="/quiz/" className="subnav-link inline-flex items-center gap-1.5">
+              <Brain className="h-3 w-3" aria-hidden />
               Quiz
             </Link>
-            <Link
-              to="/mindmap/"
-              className="inline-flex shrink-0 items-center gap-1.5 py-1.5 px-3 rounded-md text-sm transition hover:bg-secondary hover:text-primary"
-            >
-              <Network className="h-3.5 w-3.5" aria-hidden />
+            <Link to="/mindmap/" className="subnav-link inline-flex items-center gap-1.5">
+              <Network className="h-3 w-3" aria-hidden />
               Sơ đồ
             </Link>
           </div>
 
-          {/* Chapter dropdown */}
+          {/* ── Chapter dropdown ── */}
           <div
             id="chapter-menu"
             className={[
-              "chapter-menu-shell border-t border-border bg-card/95 shadow-lg backdrop-blur",
+              "chapter-menu-shell border-t border-white/10 bg-background shadow-xl",
               chapterMenuOpen ? "chapter-menu-open" : "chapter-menu-closed",
             ].join(" ")}
             aria-hidden={!chapterMenuOpen}
           >
-            <div className="mx-auto max-w-7xl px-4 py-5 md:px-6">
-              <div className="grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto max-w-7xl px-4 py-6 md:px-6">
+              {/* Header */}
+              <div className="mb-5 flex items-center gap-4">
+                <div className="section-rule flex-1" />
+                <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  12 Chủ đề · Niên giám 2026
+                </span>
+                <div className="section-rule flex-1" />
+              </div>
+
+              <div className="grid gap-0 overflow-hidden rounded-sm border border-border sm:grid-cols-2 lg:grid-cols-4">
                 {months.map((m) => {
-                  const menuItemClass =
-                    "group/menu flex min-h-28 flex-col items-start bg-background p-4 text-left transition hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-card";
-                  const menuItemContent = (
+                  const cardClass =
+                    "group/menu chapter-card flex min-h-[7.5rem] flex-col items-start text-left focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
+                  const cardContent = (
                     <>
-                      <span className="font-display text-2xl leading-none text-primary transition group-hover/menu:text-primary-foreground group-focus/menu:text-primary-foreground">
+                      <span className="font-display text-3xl font-bold leading-none text-primary transition group-hover/menu:text-primary-foreground">
                         {String(m.n).padStart(2, "0")}
                       </span>
-                      <span className="mt-3 font-display text-lg leading-tight">{m.title}</span>
-                      <span className="mt-1 text-xs leading-relaxed text-muted-foreground transition group-hover/menu:text-primary-foreground/75 group-focus/menu:text-primary-foreground/75">
+                      <span className="mt-3 font-display text-[15px] font-semibold leading-tight group-hover/menu:text-primary-foreground">
+                        {m.title}
+                      </span>
+                      <span className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground transition group-hover/menu:text-primary-foreground/70">
                         {m.sub}
                       </span>
                     </>
@@ -282,9 +300,9 @@ export function AppShell({ extra, showProgress = false }: Props) {
                       params={{ chapter: String(m.n) }}
                       tabIndex={chapterMenuOpen ? 0 : -1}
                       onClick={() => setChapterMenuOpen(false)}
-                      className={menuItemClass}
+                      className={cardClass}
                     >
-                      {menuItemContent}
+                      {cardContent}
                     </Link>
                   ) : (
                     <Link
@@ -293,9 +311,9 @@ export function AppShell({ extra, showProgress = false }: Props) {
                       hash={`chuong-${m.n}`}
                       tabIndex={chapterMenuOpen ? 0 : -1}
                       onClick={() => setChapterMenuOpen(false)}
-                      className={menuItemClass}
+                      className={cardClass}
                     >
-                      {menuItemContent}
+                      {cardContent}
                     </Link>
                   );
                 })}
@@ -305,14 +323,14 @@ export function AppShell({ extra, showProgress = false }: Props) {
         </div>
       </nav>
 
-      {/* Mobile drawer overlay */}
+      {/* ── Mobile drawer overlay ── */}
       <div
         className={["mobile-drawer-overlay", drawerOpen && "open"].filter(Boolean).join(" ")}
         onClick={() => setDrawerOpen(false)}
         aria-hidden="true"
       />
 
-      {/* Mobile drawer */}
+      {/* ── Mobile drawer ── */}
       <div
         id="mobile-drawer"
         className={["mobile-drawer", drawerOpen && "open"].filter(Boolean).join(" ")}
@@ -320,39 +338,59 @@ export function AppShell({ extra, showProgress = false }: Props) {
         aria-modal="true"
         aria-label="Menu điều hướng"
       >
-        {/* Drawer header */}
+        {/* Drawer header with 3px accent on top */}
+        <div className="nav-accent-rule" />
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
-          <Link to="/" className="flex items-center gap-2.5" onClick={() => setDrawerOpen(false)}>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
+          <Link
+            to="/"
+            className="flex items-center gap-2.5"
+            onClick={() => setDrawerOpen(false)}
+          >
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm border-2 border-primary bg-primary text-primary-foreground">
               <BookOpen className="h-4 w-4" aria-hidden />
             </div>
-            <span className="font-display text-base font-semibold">
-              365 ngày cùng Chủ nghĩa Xã hội Khoa học
-            </span>
+            <div>
+              <div className="text-xs font-bold uppercase tracking-[0.12em] text-primary">
+                365 Ngày
+              </div>
+              <div className="text-[10px] text-muted-foreground">
+                Chủ nghĩa Xã hội Khoa học
+              </div>
+            </div>
           </Link>
           <button
             type="button"
             onClick={() => setDrawerOpen(false)}
-            className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-secondary hover:text-foreground transition"
+            className="flex h-8 w-8 items-center justify-center rounded-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition"
             aria-label="Đóng menu"
           >
-            <X className="h-5 w-5" aria-hidden />
+            <X className="h-4 w-4" aria-hidden />
           </button>
+        </div>
+
+        {/* Edition label */}
+        <div className="border-b border-border bg-secondary/50 px-5 py-2">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            Niên giám 2026
+          </span>
         </div>
 
         {/* Drawer nav items */}
         <nav className="flex-1 overflow-y-auto p-4" aria-label="Mobile navigation">
-          <ul className="space-y-1">
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground px-2">
+            Điều hướng
+          </p>
+          <ul className="space-y-0.5">
             {NAV_ITEMS.map((item) => (
               <li key={item.to}>
                 <Link
                   to={item.to}
                   onClick={() => setDrawerOpen(false)}
                   className={[
-                    "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all",
+                    "flex items-center gap-3 rounded-sm px-3 py-3 text-sm font-medium transition-all",
                     isActive(item.to)
-                      ? "bg-primary/10 text-primary"
-                      : "text-foreground hover:bg-secondary",
+                      ? "bg-primary/8 text-primary border-l-2 border-primary pl-[10px]"
+                      : "text-foreground hover:bg-secondary hover:text-primary",
                   ]
                     .filter(Boolean)
                     .join(" ")}
@@ -360,23 +398,58 @@ export function AppShell({ extra, showProgress = false }: Props) {
                   {item.icon}
                   {item.label}
                   {isActive(item.to) && (
-                    <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary" />
+                    <span className="ml-auto h-1.5 w-1.5 rounded-full bg-accent" />
                   )}
                 </Link>
               </li>
             ))}
           </ul>
+
+          {/* Quick links section */}
+          <div className="mt-6 border-t border-border pt-5">
+            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground px-2">
+              Trên trang chủ
+            </p>
+            <ul className="space-y-0.5">
+              {[
+                { hash: "ngay", label: "Bài học hôm nay" },
+                { hash: "thang", label: "12 chủ đề" },
+                { hash: "suyngam", label: "Suy ngẫm" },
+                { hash: "vesach", label: "Về dự án" },
+              ].map((item) => (
+                <li key={item.hash}>
+                  <Link
+                    to="/"
+                    hash={item.hash}
+                    onClick={() => setDrawerOpen(false)}
+                    className="flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+                  >
+                    <span className="h-1 w-3 bg-accent/60 rounded-full shrink-0" />
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </nav>
 
         {/* Drawer footer */}
         <div className="border-t border-border px-5 py-4">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            365 Ngày cùng Chủ nghĩa Xã hội Khoa học · 2026
+          <button
+            type="button"
+            onClick={() => setIsDark(!isDark)}
+            className="flex w-full items-center gap-2.5 rounded-sm px-3 py-2.5 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {isDark ? "Chế độ sáng" : "Chế độ tối"}
+          </button>
+          <p className="mt-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
+            365 Ngày · 2026
           </p>
         </div>
       </div>
 
-      {/* Mobile bottom quick-action bar */}
+      {/* ── Mobile bottom quick-action bar ── */}
       <div className="mobile-bottom-bar md:hidden" role="navigation" aria-label="Điều hướng nhanh">
         {BOTTOM_NAV.map((item) => (
           <Link
